@@ -1,3 +1,11 @@
 from django.db import models
 
-# Create your models here.
+
+#todo
+class Dashboard(models.Model):
+    pass
+
+
+#todo
+class Timeline(models.Model):
+    pass
