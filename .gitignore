@@ -50,5 +50,9 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
 #ide
 *.idea/
+#db
+*.sqlite3
+
