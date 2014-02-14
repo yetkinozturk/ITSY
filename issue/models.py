@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from account.models import Account
 from common.models import Comment
+from project.models import ProjectVersion
+
 
 class IssueType(models.Model):
     name = models.CharField(_(u'Type Name'), max_length=128)
@@ -31,6 +33,10 @@ class IssuePerson(models.Model):
     person = models.ForeignKey(Account, verbose_name=_(u'Person'), null=True, blank=True)
 
 
+class IssueStatus(models.Model):
+    status = models.CharField(_(u'Status'), max_length=128)
+
+
 class Issue(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
@@ -38,6 +44,8 @@ class Issue(models.Model):
     effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True)
 
     type = models.ForeignKey(IssueType, verbose_name=_(u'Type'), null=True, blank=True)
+    status = models.ForeignKey(IssueStatus,verbose_name=_(u'Status'), null=True, blank=True)
+    project_version = models.ForeignKey(ProjectVersion,verbose_name=_(u'Project Version'), blank=True,null=True)
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
     assignee = models.ForeignKey(Account, verbose_name=_(u'Assignee'), null=True, blank=True)
     holder = models.ForeignKey(Account, verbose_name=_(u'Current Holder'),null=True,blank=True)
