@@ -8,8 +8,3 @@ class Comment(models.Model):
     owner = models.ForeignKey(Account)
     comments = models.ManyToManyField('self', null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Comment Date'), auto_now_add=True)
-
-
-class Filter(models.Model):
-    name = models.CharField(_(u'Filter Name'), max_length=128)
-    query = models.CharField(_(u'Filter Query'), max_length=1024)

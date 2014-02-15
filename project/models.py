@@ -50,6 +50,6 @@ class Project(models.Model):
 class Board(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
-    project = models.ForeignKey(Project, _(u'Project'))
+    project = models.ForeignKey(Project, verbose_name=_(u'Project'))
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
