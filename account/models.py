@@ -12,10 +12,15 @@ class AccountTeam(models.Model):
 
 
 class Account(models.Model):
+    ACCOUNT_TYPES = (
+        ('SA', 'Super Admin'),
+        ('AD', 'Admin'),
+        ('US', 'User'),
+    )
     user = models.OneToOneField(User)
     role = models.ForeignKey(AccountRole, verbose_name=_(u'Role'), null=True, blank=True)
     team = models.ForeignKey(AccountTeam, verbose_name=_(u'Team'), null=True, blank=True)
-
+    type = models.CharField(_(u'Account Type'), max_length=4, choices=ACCOUNT_TYPES, default='US')
 
 class Filter(models.Model):
     name = models.CharField(_(u'Filter Name'), max_length=128)
