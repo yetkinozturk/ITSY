@@ -37,6 +37,11 @@ class IssueStatus(models.Model):
     status = models.CharField(_(u'Status'), max_length=128)
 
 
+#todo
+class IssueFlow(models.Model):
+    pass
+
+
 class Issue(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
