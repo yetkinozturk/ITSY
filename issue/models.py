@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from account.models import Account
 from common.models import Comment
-from project.models import ProjectVersion
+from project.models import ProjectVersion, Project
 
 
 class IssueType(models.Model):
@@ -28,9 +28,14 @@ class IssueImageField(models.Model):
     value = models.ImageField(_(u'Image'), upload_to='Issue Images', null=True, blank=True)
 
 
+class IssueFileField(models.Model):
+    name = models.CharField(_(u'Field Name'), max_length=128)
+    value = models.ImageField(_(u'File'), upload_to='Issue Files', null=True, blank=True)
+
+
 class IssuePerson(models.Model):
     role = models.CharField(_(u'Role Name'), max_length=128)
-    person = models.ForeignKey(Account, verbose_name=_(u'Person'), null=True, blank=True)
+    account_id = models.PositiveIntegerField(_(u'Account ID'),null=True,blank=True)
 
 
 class IssueStatus(models.Model):
@@ -42,23 +47,27 @@ class IssueFlow(models.Model):
     pass
 
 
+class IssueTemplate(models.Model):
+    char_fields = models.ManyToManyField(IssueCharField, verbose_name=_(u'Char Fields'), null=True, blank=True)
+    text_fields = models.ManyToManyField(IssueTextField, verbose_name=_(u'Text Fields'), null=True, blank=True)
+    image_fields = models.ManyToManyField(IssueImageField, verbose_name=_(u'Image Fields'), null=True, blank=True)
+    people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
+    project = models.ForeignKey(Project,verbose_name=_(u'Project'), null=True, blank=True)
+
+
 class Issue(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
     effort = models.CharField(_(u'Effort'),max_length=128, null=True, blank=True)
     effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True)
+    project_version = models.ForeignKey(ProjectVersion,verbose_name=_(u'Project Version'), blank=True,null=True)
+    reporter = models.ForeignKey(Account, verbose_name=_(u'Assignee'), null=True, blank=True)
 
     type = models.ForeignKey(IssueType, verbose_name=_(u'Type'), null=True, blank=True)
     status = models.ForeignKey(IssueStatus,verbose_name=_(u'Status'), null=True, blank=True)
-    project_version = models.ForeignKey(ProjectVersion,verbose_name=_(u'Project Version'), blank=True,null=True)
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
-    reporter = models.ForeignKey(Account, verbose_name=_(u'Assignee'), null=True, blank=True)
-    assignee = models.PositiveIntegerField(_(u'Assignee'),null=True,blank=True)
-    holder_id = models.PositiveIntegerField(_(u'Current Holder'),null=True,blank=True)
-    char_fields = models.ManyToManyField(IssueCharField, verbose_name=_(u'Char Fields'), null=True, blank=True)
-    text_fields = models.ManyToManyField(IssueTextField, verbose_name=_(u'Text Fields'), null=True, blank=True)
-    image_fields = models.ManyToManyField(IssueImageField, verbose_name=_(u'Image Fields'), null=True, blank=True)
-    people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
+
+    template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'), null=True, blank=True)
     sub_issues = models.ManyToManyField('self', null=True, blank=True)
 
     end_date =  models.DateTimeField(_(u'End Date'), null=True, blank=True)
