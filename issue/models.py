@@ -82,6 +82,7 @@ class IssueTemplate(models.Model):
     char_fields = models.ManyToManyField(IssueCharField, verbose_name=_(u'Char Fields'), null=True, blank=True)
     text_fields = models.ManyToManyField(IssueTextField, verbose_name=_(u'Text Fields'), null=True, blank=True)
     image_fields = models.ManyToManyField(IssueImageField, verbose_name=_(u'Image Fields'), null=True, blank=True)
+    file_fields = models.ManyToManyField(IssueFileField, verbose_name=_(u'File Fields'),null=True, blank=True)
     people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
     project = models.ForeignKey(Project,verbose_name=_(u'Project'), null=True, blank=True)
 
