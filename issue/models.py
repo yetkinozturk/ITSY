@@ -8,39 +8,61 @@ from project.models import ProjectVersion, Project
 class IssueType(models.Model):
     name = models.CharField(_(u'Type Name'), max_length=128)
 
+    def __unicode__(self):
+        return self.name
+
 
 class IssuePriority(models.Model):
     name = models.CharField(_(u'Issue Priority'), max_length=128)
+
+    def __unicode__(self):
+        return self.name
 
 
 class IssueCharField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
     value = models.CharField(_(u'Field Value'), max_length=255,null=True,blank=True)
 
+    def __unicode__(self):
+        return self.name
+
 
 class IssueTextField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
     value = models.TextField(_(u'Field Value'), null=True,blank=True)
+
+    def __unicode__(self):
+        return self.name
 
 
 class IssueImageField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
     value = models.ImageField(_(u'Image'), upload_to='Issue Images', null=True, blank=True)
 
+    def __unicode__(self):
+        return self.name
 
 class IssueFileField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
     value = models.ImageField(_(u'File'), upload_to='Issue Files', null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
 
 
 class IssuePerson(models.Model):
     role = models.CharField(_(u'Role Name'), max_length=128)
     account_id = models.PositiveIntegerField(_(u'Account ID'),null=True,blank=True)
 
+    def __unicode__(self):
+        return self.role
+
 
 class IssueStatus(models.Model):
     status = models.CharField(_(u'Status'), max_length=128)
 
+    def __unicode__(self):
+        return self.status
 
 #todo
 class IssueFlow(models.Model):
@@ -48,12 +70,15 @@ class IssueFlow(models.Model):
 
 
 class IssueTemplate(models.Model):
+    name = models.CharField(_(u'Template Name'), max_length=128)
     char_fields = models.ManyToManyField(IssueCharField, verbose_name=_(u'Char Fields'), null=True, blank=True)
     text_fields = models.ManyToManyField(IssueTextField, verbose_name=_(u'Text Fields'), null=True, blank=True)
     image_fields = models.ManyToManyField(IssueImageField, verbose_name=_(u'Image Fields'), null=True, blank=True)
     people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
     project = models.ForeignKey(Project,verbose_name=_(u'Project'), null=True, blank=True)
 
+    def __unicode__(self):
+        return self.name
 
 class Issue(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
@@ -74,6 +99,9 @@ class Issue(models.Model):
     due_date = models.DateTimeField(_(u'Due Date'), null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
+
+    def __unicode__(self):
+        return self.title
 
 
 class IssueWatch(models.Model):

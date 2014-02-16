@@ -6,6 +6,8 @@ from account.models import Account
 class MilestoneStatus(models.Model):
     status = models.CharField(_(u'Status'), max_length=128)
 
+    def __unicode__(self):
+        return self.status
 
 class Milestone(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
@@ -21,11 +23,17 @@ class Milestone(models.Model):
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
 
+    def __unicode__(self):
+        return self.title
+
 
 class ProjectCategory(models.Model):
     name = models.CharField(_(u'Category Name'), max_length=128)
     responsible = models.ForeignKey(Account, verbose_name=_(u'Responsible'), null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    def __unicode__(self):
+        return self.name
 
 
 class ProjectVersion(models.Model):
@@ -37,6 +45,9 @@ class ProjectVersion(models.Model):
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
 
+    def __unicode__(self):
+        return self.title
+
 
 class Project(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
@@ -46,6 +57,9 @@ class Project(models.Model):
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
 
+    def __unicode__(self):
+        return self.title
+
 
 class Board(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
@@ -53,3 +67,6 @@ class Board(models.Model):
     project = models.ForeignKey(Project, verbose_name=_(u'Project'))
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
+
+    def __unicode__(self):
+        return self.title
