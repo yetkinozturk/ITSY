@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from account.models import Account
 from common.models import Comment
+from common.fields import ListField
 from project.models import ProjectVersion, Project
 
 
@@ -64,9 +65,16 @@ class IssueStatus(models.Model):
     def __unicode__(self):
         return self.status
 
-#todo
+
 class IssueFlow(models.Model):
-    pass
+    name = models.CharField(_(u'Flow Name'), max_length=128)
+    accounts = ListField(_(u'Accounts List'), null=True, blank=True)
+    current = models.PositiveIntegerField(_(u'Current'), null=True, blank=True)
+    next = models.PositiveIntegerField(_(u'Next'), null=True, blank=True)
+    prev = models.PositiveIntegerField(_(u'Previous'), null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
 
 
 class IssueTemplate(models.Model):
@@ -79,6 +87,7 @@ class IssueTemplate(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Issue(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
@@ -93,6 +102,7 @@ class Issue(models.Model):
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
 
     template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'), null=True, blank=True)
+    flow = models.ForeignKey(IssueFlow, verbose_name=_(u'Issue Flow'), null=True,blank=True)
     sub_issues = models.ManyToManyField('self', null=True, blank=True)
 
     end_date =  models.DateTimeField(_(u'End Date'), null=True, blank=True)
