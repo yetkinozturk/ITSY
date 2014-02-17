@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from account.models import Account
-
+from autoslug import AutoSlugField
 
 class MilestoneStatus(models.Model):
     status = models.CharField(_(u'Status'), max_length=128)
@@ -11,6 +11,7 @@ class MilestoneStatus(models.Model):
 
 class Milestone(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
+    slug = AutoSlugField(populate_from='title', unique=True)
     effort = models.CharField(_(u'Effort'),max_length=128, null=True, blank=True)
     effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True)
     bug_to_fixed = models.PositiveIntegerField(_(u'Bugs to Fixed'), null=True, blank=True)
@@ -51,6 +52,7 @@ class ProjectVersion(models.Model):
 
 class Project(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
+    slug = AutoSlugField(populate_from='title', unique=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
     versions = models.ManyToManyField(ProjectVersion, verbose_name=_(u'Versions'))
     responsible = models.ForeignKey(Account, verbose_name=_(u'Responsible'), null=True, blank=True)
@@ -63,6 +65,7 @@ class Project(models.Model):
 
 class Board(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
+    slug = AutoSlugField(populate_from='title', unique=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
     project = models.ForeignKey(Project, verbose_name=_(u'Project'))
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)

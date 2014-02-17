@@ -4,6 +4,7 @@ from account.models import Account
 from common.models import Comment
 from common.fields import ListField
 from project.models import ProjectVersion, Project
+from autoslug import AutoSlugField
 
 
 class IssueType(models.Model):
@@ -92,6 +93,7 @@ class IssueTemplate(models.Model):
 
 class Issue(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
+    slug = AutoSlugField(populate_from='title', unique=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
     effort = models.CharField(_(u'Effort'),max_length=128, null=True, blank=True)
     effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True)

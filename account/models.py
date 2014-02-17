@@ -27,6 +27,7 @@ class Account(models.Model):
     role = models.ForeignKey(AccountRole, verbose_name=_(u'Role'), null=True, blank=True)
     team = models.ForeignKey(AccountTeam, verbose_name=_(u'Team'), null=True, blank=True)
     type = models.CharField(_(u'Account Type'), max_length=4, choices=ACCOUNT_TYPES, default='US')
+    follows = models.ManyToManyField('self', related_name='followers', symmetrical=False, null=True, blank=True)
 
     def __unicode__(self):
         return u'%s %s' % (self.user.first_name, self.user.last_name)

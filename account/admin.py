@@ -1,3 +1,9 @@
 from django.contrib import admin
+from account.models import AccountRole, AccountTeam, Account, Filter, FavoriteFilters
 
-# Register your models here.
+
+admin.site.register(Account)
+admin.site.register(AccountTeam)
+admin.site.register(AccountRole)
+admin.site.register(Filter)
+admin.site.register(FavoriteFilters)
