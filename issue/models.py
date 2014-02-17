@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from account.models import Account
@@ -5,7 +6,7 @@ from common.models import Comment
 from common.fields import ListField
 from project.models import ProjectVersion, Project
 from autoslug import AutoSlugField
-
+from taggit.managers import TaggableManager
 
 class IssueType(models.Model):
     name = models.CharField(_(u'Type Name'), max_length=128)
@@ -103,11 +104,12 @@ class Issue(models.Model):
     type = models.ForeignKey(IssueType, verbose_name=_(u'Type'), null=True, blank=True)
     status = models.ForeignKey(IssueStatus,verbose_name=_(u'Status'), null=True, blank=True)
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
-
+    tags = TaggableManager(blank=True)
     template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'), null=True, blank=True)
     flow = models.ForeignKey(IssueFlow, verbose_name=_(u'Issue Flow'), null=True,blank=True)
     sub_issues = models.ManyToManyField('self', null=True, blank=True)
 
+    is_draft = models.BooleanField(_(u'Draft'), default=True)
     end_date =  models.DateTimeField(_(u'End Date'), null=True, blank=True)
     due_date = models.DateTimeField(_(u'Due Date'), null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
@@ -115,6 +117,12 @@ class Issue(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def overdue_status(self):
+        if datetime.date.today() > self.due_date :
+            return True
+        else:
+            return False
 
 
 class IssueWatch(models.Model):

@@ -54,13 +54,18 @@ class Project(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     slug = AutoSlugField(populate_from='title', unique=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
-    versions = models.ManyToManyField(ProjectVersion, verbose_name=_(u'Versions'))
+    versions = models.ManyToManyField(ProjectVersion, verbose_name=_(u'Versions'),null=True,blank=True)
     responsible = models.ForeignKey(Account, verbose_name=_(u'Responsible'), null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
 
     def __unicode__(self):
         return self.title
+
+
+class ProjectMembership(models.Model):
+    project = models.ForeignKey(Project, verbose_name=_(u'Project'))
+    members = models.ManyToManyField(Account,verbose_name=_(u'Members'),null=True,blank=True)
 
 
 class Board(models.Model):

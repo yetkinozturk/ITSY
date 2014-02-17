@@ -8,7 +8,57 @@
             <h4 class="modal-title" id="myModalLabel">Create Issue</h4>
           </div>
           <div class="modal-body">
-          {{ create_issue_form.as_p }}
+             {{ create_issue_form.non_field_errors }}
+            <div class="fieldWrapper">
+                {{ create_issue_form.title.errors }}
+                <label for="id_subject">{{ create_issue_form.title.label }}:</label>
+                {{ create_issue_form.title }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.summary.errors }}
+                <label for="id_subject">{{ create_issue_form.summary.label }}:</label>
+                {{ create_issue_form.summary }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.effort.errors }}
+                <label for="id_subject">{{ create_issue_form.effort.label }}:</label>
+                {{ create_issue_form.effort }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.project_version.errors }}
+                <label for="id_subject">{{ create_issue_form.project_version.label }}:</label>
+                {{ create_issue_form.project_version }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.type.errors }}
+                <label for="id_subject">{{ create_issue_form.type.label }}:</label>
+                {{ create_issue_form.type }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.status.errors }}
+                <label for="id_subject">{{ create_issue_form.status.label }}:</label>
+                {{ create_issue_form.status }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.priority.errors }}
+                <label for="id_subject">{{ create_issue_form.priority.label }}:</label>
+                {{ create_issue_form.priority }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.template.errors }}
+                <label for="id_subject">{{ create_issue_form.template.label }}:</label>
+                {{ create_issue_form.template }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.flow.errors }}
+                <label for="id_subject">{{ create_issue_form.flow.label }}:</label>
+                {{ create_issue_form.flow }}
+            </div>
+            <div class="fieldWrapper">
+                {{ create_issue_form.due_date.errors }}
+                <label for="id_subject">{{ create_issue_form.due_date.label }}:</label>
+                {{ create_issue_form.due_date }}
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
