@@ -12,7 +12,7 @@
     <div id="createissueformid" class="createissueform" style="width: 100%; overflow: hidden;">
         {% include 'issue/leftnavigation.html' %}
         <div style="margin-left: 240px;">
-            <form id="create-issue-form" action="/issue/create/" method="post">{% csrf_token %}
+            <form id="create-issue-form" action="{% url 'issue:create:item' %}" method="post">{% csrf_token %}
               <h3>Create An Issue</h3>
               <div class="modal-body">
                  {{ create_issue_form.non_field_errors }}
