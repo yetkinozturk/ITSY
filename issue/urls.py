@@ -6,7 +6,6 @@ from issue.views import (CreateIssueView,CreateIssueTypeView,CreateIssueStatusVi
                          CreateIssueFlowView,CreateIssueTemplateView)
 
 urlpatterns = patterns('',
-    #url(r'^$', MainDashboardView.as_view(), name='home'),
     url(r'^create/', CreateIssueView.as_view(),name='create_issue'),
     url(r'^createissuetype/', CreateIssueTypeView.as_view(),name='create_issue'),
     url(r'^createissuestatus/', CreateIssueStatusView.as_view(),name='create_issue'),
