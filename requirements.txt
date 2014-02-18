@@ -1,3 +1,4 @@
 Django==1.6.2
 django-autoslug==1.7.2
 django-taggit==0.11.2
+django-forms-bootstrap==3.0.0
