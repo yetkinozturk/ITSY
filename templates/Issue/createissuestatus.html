@@ -13,7 +13,7 @@
     <div id="createissueformid" class="createissueform" style="width: 100%; overflow: hidden;">
         {% include 'issue/leftnavigation.html' %}
         <div style="margin-left: 240px;">
-            <form>
+            <form method="post">
             <h4>Create An Issue Status</h4>
             {% csrf_token %}
             {{ create_issue_status_form|as_bootstrap }}
