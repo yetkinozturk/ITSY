@@ -6,7 +6,7 @@
     <style>
 
     </style>
-    <title>ITSY Create Issue Template</title>
+    <title>ITSY Create Issue Flow</title>
 </head>
 <body>
     {% include 'common/topnavigation.html' %}
@@ -14,6 +14,7 @@
         {% include 'issue/leftnavigation.html' %}
         <div style="margin-left: 240px;">
             <form>
+            <h4>Create An Issue Flow</h4>
             {% csrf_token %}
             {{ create_issue_flow_form|as_bootstrap }}
             <div class="form-actions">
