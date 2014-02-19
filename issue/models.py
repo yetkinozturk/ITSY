@@ -9,14 +9,14 @@ from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 
 class IssueType(models.Model):
-    name = models.CharField(_(u'Type Name'), max_length=128)
+    name = models.CharField(_(u'Type Name'), max_length=128,unique=True)
 
     def __unicode__(self):
         return self.name
 
 
 class IssuePriority(models.Model):
-    name = models.CharField(_(u'Issue Priority'), max_length=128)
+    name = models.CharField(_(u'Issue Priority'), max_length=128,unique=True)
 
     def __unicode__(self):
         return self.name
@@ -62,7 +62,7 @@ class IssuePerson(models.Model):
 
 
 class IssueStatus(models.Model):
-    status = models.CharField(_(u'Status'), max_length=128)
+    status = models.CharField(_(u'Status'), max_length=128,unique=True)
 
     def __unicode__(self):
         return self.status

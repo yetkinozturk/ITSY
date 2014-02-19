@@ -1,6 +1,8 @@
 from django.core.context_processors import csrf
 from django.shortcuts import render
 from django.views.generic.base import View
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 from django.forms import ModelForm
 from issue.models import (Issue, IssueType, IssueStatus, IssuePriority,IssueCharField,
                           IssueTextField, IssueImageField,IssueFileField,IssuePerson,
@@ -14,6 +16,12 @@ class CreateIssueForm(ModelForm):
             'title', 'summary', 'effort', 'project_version', 'type',
             'status', 'priority', 'template', 'flow', 'sub_issues','due_date'
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueView(View):
@@ -36,6 +44,12 @@ class CreateIssueTypeForm(ModelForm):
             'name',
         ]
 
+    def clean(self):
+        cleaned_data = super(CreateIssueTypeForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
+
 
 class CreateIssueTypeView(View):
     template_name = 'issue/createissuetype.html'
@@ -47,7 +61,12 @@ class CreateIssueTypeView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueTypeForm(request.POST)
+        self.content['create_issue_type_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssueStatusForm(ModelForm):
@@ -56,6 +75,12 @@ class CreateIssueStatusForm(ModelForm):
         fields = [
             'status',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueStatusForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueStatusView(View):
@@ -68,7 +93,12 @@ class CreateIssueStatusView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueStatusForm(request.POST)
+        self.content['create_issue_status_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssuePriorityForm(ModelForm):
@@ -78,6 +108,11 @@ class CreateIssuePriorityForm(ModelForm):
             'name',
         ]
 
+    def clean(self):
+        cleaned_data = super(CreateIssuePriorityForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 class CreateIssuePriorityView(View):
     template_name = 'issue/createissuepriority.html'
@@ -89,7 +124,12 @@ class CreateIssuePriorityView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssuePriorityForm(request.POST)
+        self.content['create_issue_priority_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssueCharForm(ModelForm):
@@ -98,6 +138,12 @@ class CreateIssueCharForm(ModelForm):
         fields = [
             'name',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueCharForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueCharView(View):
@@ -110,7 +156,12 @@ class CreateIssueCharView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueCharForm(request.POST)
+        self.content['create_issue_char_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssueTextForm(ModelForm):
@@ -119,6 +170,12 @@ class CreateIssueTextForm(ModelForm):
         fields = [
             'name',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueTextForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueTextView(View):
@@ -131,7 +188,12 @@ class CreateIssueTextView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueTextForm(request.POST)
+        self.content['create_issue_text_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssueImageForm(ModelForm):
@@ -140,6 +202,12 @@ class CreateIssueImageForm(ModelForm):
         fields = [
             'name',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueImageForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueImageView(View):
@@ -152,7 +220,12 @@ class CreateIssueImageView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueImageForm(request.POST)
+        self.content['create_issue_image_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssueFileForm(ModelForm):
@@ -161,6 +234,12 @@ class CreateIssueFileForm(ModelForm):
         fields = [
             'name',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueFileForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueFileView(View):
@@ -173,7 +252,12 @@ class CreateIssueFileView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueFileForm(request.POST)
+        self.content['create_issue_file_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssuePersonForm(ModelForm):
@@ -182,6 +266,12 @@ class CreateIssuePersonForm(ModelForm):
         fields = [
             'role',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssuePersonForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssuePersonView(View):
@@ -194,7 +284,12 @@ class CreateIssuePersonView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssuePersonForm(request.POST)
+        self.content['create_issue_person_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssueFlowForm(ModelForm):
@@ -203,6 +298,12 @@ class CreateIssueFlowForm(ModelForm):
         fields = [
             'name',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueFlowForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueFlowView(View):
@@ -215,7 +316,12 @@ class CreateIssueFlowView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueFlowForm(request.POST)
+        self.content['create_issue_flow_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
 
 
 class CreateIssueTemplateForm(ModelForm):
@@ -225,6 +331,12 @@ class CreateIssueTemplateForm(ModelForm):
             'name','char_fields','text_fields','image_fields','file_fields',
             'people','project',
         ]
+
+    def clean(self):
+        cleaned_data = super(CreateIssueTemplateForm, self).clean()
+        if not cleaned_data:
+            raise forms.ValidationError(_(u"Fields are required."))
+        return cleaned_data
 
 
 class CreateIssueTemplateView(View):
@@ -237,4 +349,9 @@ class CreateIssueTemplateView(View):
         return render(request, self.template_name, self.content)
 
     def post(self,request):
-        return render(request, self.template_name)
+        self.content.update(csrf(request))
+        form = CreateIssueTemplateForm(request.POST)
+        self.content['create_issue_template_form'] = form
+        if form.is_valid():
+            form.save()
+        return render(request, self.template_name,self.content)
