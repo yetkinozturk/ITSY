@@ -54,6 +54,7 @@ class CreateIssueTypeForm(ModelForm):
 class CreateIssueTypeView(View):
     template_name = 'issue/createissuetype.html'
     content = {}
+    content['issue_types'] = IssueType.objects.all()
 
     def get(self,request):
         self.content.update(csrf(request))

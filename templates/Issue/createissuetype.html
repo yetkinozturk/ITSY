@@ -1,11 +1,10 @@
 {% load bootstrap_toolkit %}
+{% load render_table from django_tables2 %}
 <!DOCTYPE html>
 <html>
 <head>
     {% include 'common/styles.html' %}
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
     <title>ITSY Create Issue Type</title>
 </head>
 <body>
@@ -21,6 +20,9 @@
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
             </form>
+        </div>
+        <div style="margin-left: 240px; padding-top: 100px">
+            {% render_table issue_types %}
         </div>
     </div>
   </body>
