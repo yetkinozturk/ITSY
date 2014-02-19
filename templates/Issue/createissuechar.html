@@ -1,4 +1,4 @@
-{% load bootstrap_tags %}
+{% load bootstrap_toolkit %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +14,7 @@
         {% include 'issue/leftnavigation.html' %}
         <div style="margin-left: 240px;">
             <h4>Create An Issue Text Field</h4>
-            <form>
+            <form method="post">
             {% csrf_token %}
             {{ create_issue_char_form|as_bootstrap }}
             <div class="form-actions">
