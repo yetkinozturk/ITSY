@@ -80,7 +80,7 @@ class IssueFlow(models.Model):
 
 
 class IssueTemplate(models.Model):
-    name = models.CharField(_(u'Template Name'), max_length=128)
+    name = models.CharField(_(u'Template Name'), max_length=128,help_text=_(u'Give a name to your template for easy access'))
     char_fields = models.ManyToManyField(IssueCharField, verbose_name=_(u'Char Fields'), null=True, blank=True)
     text_fields = models.ManyToManyField(IssueTextField, verbose_name=_(u'Text Fields'), null=True, blank=True)
     image_fields = models.ManyToManyField(IssueImageField, verbose_name=_(u'Image Fields'), null=True, blank=True)

@@ -7,7 +7,6 @@ from issue.views import (CreateIssueView,CreateIssueTypeView,CreateIssueStatusVi
 
 
 urlpatterns = patterns('',
-    url(r'^',            CreateIssueView.as_view(),          name='item'),
     url(r'^type/',       CreateIssueTypeView.as_view(),      name='type'),
     url(r'^status/',     CreateIssueStatusView.as_view(),    name='status'),
     url(r'^priority/',   CreateIssuePriorityView.as_view(),  name='priority'),
@@ -18,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^person/',     CreateIssuePersonView.as_view(),    name='person'),
     url(r'^flow/',       CreateIssueFlowView.as_view(),      name='flow'),
     url(r'^template/',   CreateIssueTemplateView.as_view(),  name='template'),
+    url(r'^',            CreateIssueView.as_view(),          name='item'),
 )
