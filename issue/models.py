@@ -24,7 +24,6 @@ class IssuePriority(models.Model):
 
 class IssueCharField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
-    value = models.CharField(_(u'Field Value'), max_length=255,null=True,blank=True)
 
     def __unicode__(self):
         return self.name
@@ -32,7 +31,6 @@ class IssueCharField(models.Model):
 
 class IssueTextField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
-    value = models.TextField(_(u'Field Value'), null=True,blank=True)
 
     def __unicode__(self):
         return self.name
@@ -40,14 +38,12 @@ class IssueTextField(models.Model):
 
 class IssueImageField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
-    value = models.ImageField(_(u'Image'), upload_to='Issue Images', null=True, blank=True)
 
     def __unicode__(self):
         return self.name
 
 class IssueFileField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
-    value = models.ImageField(_(u'File'), upload_to='Issue Files', null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -55,7 +51,6 @@ class IssueFileField(models.Model):
 
 class IssuePerson(models.Model):
     role = models.CharField(_(u'Role Name'), max_length=128)
-    account_id = models.PositiveIntegerField(_(u'Account ID'),null=True,blank=True)
 
     def __unicode__(self):
         return self.role
@@ -133,3 +128,34 @@ class IssueWatch(models.Model):
 class IssueComment(models.Model):
     models.ForeignKey(Issue, verbose_name=_(u'Issue'))
     models.ManyToManyField(Comment, verbose_name=_(u'Comments'))
+
+
+class IssueCharValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssueCharField)
+    value = models.CharField(_(u'Field Value'), max_length=255,null=True,blank=True)
+
+
+class IssueTextValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssueTextField)
+    value = models.TextField(_(u'Field Value'), null=True,blank=True)
+
+
+class IssueImageValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssueImageField)
+    value = models.ImageField(_(u'Image'), upload_to='Issue Images', null=True, blank=True)
+
+
+class IssueFileValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssueFileField)
+    value = models.ImageField(_(u'File'), upload_to='Issue Files', null=True, blank=True)
+
+
+class IssuePersonValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssuePerson)
+    value = models.ForeignKey(Account, null=True, blank=True)
+
