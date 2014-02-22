@@ -1,9 +1,32 @@
 from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
+from django import forms
+from issue.models import Issue
+
+
+class CreateIssueDetails(UpdateView):
+    slug = ''
+    context_object_name = 'issue'
+
+    def get(self, request, *args, **kwargs):
+        self.slug = kwargs.get('slug')
+        return super(CreateIssueDetails, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.slug = kwargs.get('slug')
+        return super(CreateIssueDetails, self).post(request, *args, **kwargs)
+
+    def get_object(self):
+        return get_object_or_404(Issue, slug=self.slug)
 
 
 class CreateIssueView(CreateView):
-    pass
+
+    def get_success_url(self):
+        return '/issue/create/details/%s/' % self.object.slug
 
 
 class CreateIssueFlow(CreateView):

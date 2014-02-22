@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url
 from issue.models import (IssueType, IssueStatus, IssuePriority,IssueCharField,
                           IssueTextField, IssueImageField,IssueFileField,
                           IssuePerson, IssueFlow, IssueTemplate, Issue)
-from issue.views import (CreateIssueView, CreateIssueFlow, CreateIssueField)
+from issue.views import (CreateIssueView, CreateIssueFlow, CreateIssueField,
+                         CreateIssueDetails)
 
 
 urlpatterns = patterns('',
@@ -99,10 +100,18 @@ urlpatterns = patterns('',
         ),
         name='template'),
 
+    url(r'^details/(?P<slug>\w+)/',
+        CreateIssueDetails.as_view(
+            model=Issue,
+            success_url='/issue/view/item/',
+            template_name = 'issue/create/issuedetails.html'
+        ),
+        name='details'),
+
     url(r'^',
         CreateIssueView.as_view(
             model=Issue,
-            success_url='/issue/view/item/',
+            success_url='/issue/create/details/',
             fields = [
                 'title', 'summary', 'effort', 'project_version', 'type',
                 'status', 'priority', 'template', 'flow', 'sub_issues','due_date'

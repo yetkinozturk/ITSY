@@ -53,8 +53,8 @@ class ProjectVersion(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
     project = models.ForeignKey('Project', verbose_name=_(u'Project'))
-    milestones = models.ManyToManyField(Milestone, verbose_name=_(u'Milestones'))
-    category = models.ForeignKey(ProjectCategory, verbose_name=_(u'Category'))
+    milestones = models.ManyToManyField(Milestone, verbose_name=_(u'Milestones'),null=True,blank=True)
+    category = models.ForeignKey(ProjectCategory, verbose_name=_(u'Category'),null=True,blank=True)
     responsible = models.ForeignKey(Account, verbose_name=_(u'Responsible'), null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
@@ -63,7 +63,7 @@ class ProjectVersion(models.Model):
         ordering = ['-entry_date']
 
     def __unicode__(self):
-        return self.title
+        return u'%s / %s'%(self.project.title, self.title)
 
 
 class Project(models.Model):
