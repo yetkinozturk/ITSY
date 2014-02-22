@@ -52,6 +52,7 @@ class ProjectCategory(models.Model):
 class ProjectVersion(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
+    project = models.ForeignKey('Project', verbose_name=_(u'Project'))
     milestones = models.ManyToManyField(Milestone, verbose_name=_(u'Milestones'))
     category = models.ForeignKey(ProjectCategory, verbose_name=_(u'Category'))
     responsible = models.ForeignKey(Account, verbose_name=_(u'Responsible'), null=True, blank=True)
@@ -69,7 +70,6 @@ class Project(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     slug = AutoSlugField(populate_from='title', unique=True)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
-    versions = models.ManyToManyField(ProjectVersion, verbose_name=_(u'Versions'),null=True,blank=True)
     responsible = models.ForeignKey(Account, verbose_name=_(u'Responsible'), null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)

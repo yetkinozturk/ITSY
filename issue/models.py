@@ -130,7 +130,7 @@ class IssueTemplate(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
-        
+
     def __unicode__(self):
         return self.name
 
