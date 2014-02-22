@@ -1,4 +1,3 @@
-{% load bootstrap_toolkit %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +5,7 @@
     <style>
 
     </style>
-    <title>ITSY Create Issue Person Field</title>
+    <title>ITSY Create Issue Flow</title>
 </head>
 <body>
     {% include 'common/topnavigation.html' %}
@@ -14,9 +13,9 @@
         {% include 'issue/leftnavigation.html' %}
         <div style="margin-left: 240px;">
             <form method="post">
-            <h4>Create An Issue Person Field</h4>
+            <h4>Create An Issue Flow</h4>
             {% csrf_token %}
-            {{ create_issue_person_form|as_bootstrap }}
+            {{ form.as_p}}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </div>

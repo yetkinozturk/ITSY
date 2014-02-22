@@ -15,90 +15,90 @@
             <form id="create-issue-form" action="{% url 'issue:create:item' %}" method="post">{% csrf_token %}
               <h3>Create An Issue</h3>
               <div class="modal-body">
-                 {{ create_issue_form.non_field_errors }}
+                 {{ form.non_field_errors }}
                 <div class="fieldWrapper">
-                    <div style="width: 170px; float: left;">{{ create_issue_form.title.errors }}
-                        <label for="id_subject">{{ create_issue_form.title.label }}:</label>
+                    <div style="width: 170px; float: left;">{{ form.title.errors }}
+                        <label for="id_subject">{{ form.title.label }}:</label>
                     </div>
                     <div>
-                        {{ create_issue_form.title }}
+                        {{ form.title }}
                     </div>
                 </div>
                 <div class="fieldWrapper">
-                    <div style="width: 170px; float: left;">{{ create_issue_form.summary.errors }}
-                        <label for="id_subject">{{ create_issue_form.summary.label }}:</label>
+                    <div style="width: 170px; float: left;">{{ form.summary.errors }}
+                        <label for="id_subject">{{ form.summary.label }}:</label>
                     </div>
                     <div>
-                        {{ create_issue_form.summary }}
+                        {{ form.summary }}
                     </div>
                 </div>
                 <div class="fieldWrapper">
-                    <div>{{ create_issue_form.effort.errors }}
-                        <label for="id_subject">{{ create_issue_form.effort.label }}:</label>
+                    <div>{{ form.effort.errors }}
+                        <label for="id_subject">{{ form.effort.label }}:</label>
                     </div>
                     <div>
-                        {{ create_issue_form.effort }}
+                        {{ form.effort }}
                     </div>
                 </div>
                 <div class="fieldWrapper">
-                    <div>{{ create_issue_form.project_version.errors }}
-                        <label for="id_subject">{{ create_issue_form.project_version.label }}:</label>
+                    <div>{{ form.project_version.errors }}
+                        <label for="id_subject">{{ form.project_version.label }}:</label>
                     </div>
                     <div>
-                        {{ create_issue_form.project_version }}
+                        {{ form.project_version }}
                     </div>
                 </div>
                 <div class="fieldWrapper">
-                    <div>{{ create_issue_form.type.errors }}
-                        <label for="id_subject">{{ create_issue_form.type.label }}:</label>
+                    <div>{{ form.type.errors }}
+                        <label for="id_subject">{{ form.type.label }}:</label>
                     </div>
                     <div>
-                        {{ create_issue_form.type }}
-                    </div>
-                </div>
-                <div class="fieldWrapper">
-                    <div>
-                    {{ create_issue_form.status.errors }}
-                    <label for="id_subject">{{ create_issue_form.status.label }}:</label>
-                    </div>
-                    <div>
-                    {{ create_issue_form.status }}
+                        {{ form.type }}
                     </div>
                 </div>
                 <div class="fieldWrapper">
                     <div>
-                    {{ create_issue_form.priority.errors }}
-                    <label for="id_subject">{{ create_issue_form.priority.label }}:</label>
+                    {{ form.status.errors }}
+                    <label for="id_subject">{{ form.status.label }}:</label>
                     </div>
                     <div>
-                    {{ create_issue_form.priority }}
-                    </div>
-                </div>
-                <div class="fieldWrapper">
-                    <div>
-                    {{ create_issue_form.template.errors }}
-                    <label for="id_subject">{{ create_issue_form.template.label }}:</label>
-                    </div>
-                    <div>
-                    {{ create_issue_form.template }}
+                    {{ form.status }}
                     </div>
                 </div>
                 <div class="fieldWrapper">
                     <div>
-                    {{ create_issue_form.flow.errors }}
-                    <label for="id_subject">{{ create_issue_form.flow.label }}:</label>
+                    {{ form.priority.errors }}
+                    <label for="id_subject">{{ form.priority.label }}:</label>
                     </div>
                     <div>
-                    {{ create_issue_form.flow }}
+                    {{ form.priority }}
                     </div>
                 </div>
                 <div class="fieldWrapper">
                     <div>
-                        {{ create_issue_form.due_date.errors }}
-                        <label for="id_subject">{{ create_issue_form.due_date.label }}:</label>
+                    {{ form.template.errors }}
+                    <label for="id_subject">{{ form.template.label }}:</label>
                     </div>
                     <div>
-                        {{ create_issue_form.due_date }}
+                    {{ form.template }}
+                    </div>
+                </div>
+                <div class="fieldWrapper">
+                    <div>
+                    {{ form.flow.errors }}
+                    <label for="id_subject">{{ form.flow.label }}:</label>
+                    </div>
+                    <div>
+                    {{ form.flow }}
+                    </div>
+                </div>
+                <div class="fieldWrapper">
+                    <div>
+                        {{ form.due_date.errors }}
+                        <label for="id_subject">{{ form.due_date.label }}:</label>
+                    </div>
+                    <div>
+                        {{ form.due_date }}
                     </div>
                 </div>
               </div>

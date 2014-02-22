@@ -1,4 +1,3 @@
-{% load bootstrap_toolkit %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,17 +5,17 @@
     <style>
 
     </style>
-    <title>ITSY Create Issue File</title>
+    <title>{{ page_title }}</title>
 </head>
 <body>
     {% include 'common/topnavigation.html' %}
     <div id="createissueformid" class="createissueform" style="width: 100%; overflow: hidden;">
         {% include 'issue/leftnavigation.html' %}
         <div style="margin-left: 240px;">
-            <h4>Create An Issue File Field</h4>
             <form method="post">
+            <h4>{{ page_heading }}</h4>
             {% csrf_token %}
-            {{ create_issue_file_form|as_bootstrap }}
+            {{ form.as_p}}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
