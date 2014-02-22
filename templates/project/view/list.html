@@ -7,13 +7,14 @@
     <style>
 
     </style>
-    <title>ITSY Projects</title>
+    <title>{{ page_title }}</title>
 </head>
 <body>
     {% include 'common/topnavigation.html' %}
     {% include 'project/leftnavigation.html' %}
+    <h4>{{ page_heading }}</h4>
     <div style="margin-left: 240px;">
-        {% render_table project_list %}
+        {% render_table object_list %}
     </div>
 </body>
 </html>

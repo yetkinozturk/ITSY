@@ -1,47 +1,52 @@
 from django.conf.urls import patterns, url
-from django.views.generic import ListView
+from project.views import ListProjectView
 from project.models import (Project,ProjectCategory,ProjectVersion,Milestone,
                             MilestoneStatus)
 
 urlpatterns = patterns('',
 
     url(r'^project/',
-        ListView.as_view(
+        ListProjectView.as_view(
             queryset=Project.objects.all(),
-            context_object_name='project_list',
-            template_name='project/view/project.html'
+            context_object_name='object_list',
+            page_title='ITSY Issue Projects',
+            page_heading='Projects:'
         ),
         name='project'),
 
     url(r'^category/',
-        ListView.as_view(
+        ListProjectView.as_view(
             queryset=ProjectCategory.objects.all(),
-            context_object_name='project_category_list',
-            template_name='project/view/category.html'
+            context_object_name='object_list',
+            page_title='ITSY Project Categories',
+            page_heading='Project Categories:'
         ),
         name='category'),
 
     url(r'^version/',
-        ListView.as_view(
+        ListProjectView.as_view(
             queryset=ProjectVersion.objects.all(),
-            context_object_name='project_version_list',
-            template_name='project/view/version.html'
+            context_object_name='object_list',
+            page_title='ITSY Project Versions',
+            page_heading='Project Versions:'
         ),
         name='version'),
 
     url(r'^milestone/',
-        ListView.as_view(
+        ListProjectView.as_view(
             queryset=Milestone.objects.all(),
-            context_object_name='milestone_list',
-            template_name='project/view/milestone.html'
+            context_object_name='object_list',
+            page_title='ITSY Milestones',
+            page_heading='Milestones:'
         ),
         name='milestone'),
 
     url(r'^milestatus/',
-        ListView.as_view(
+        ListProjectView.as_view(
             queryset=MilestoneStatus.objects.all(),
-            context_object_name='milestone_status_list',
-            template_name='project/view/milestatus.html'
+            context_object_name='object_list',
+            page_title='ITSY Milestone Statuses',
+            page_heading='Milestone Statuses:'
         ),    name='milestatus'),
 )
 
