@@ -10,6 +10,11 @@ from taggit.managers import TaggableManager
 
 class IssueType(models.Model):
     name = models.CharField(_(u'Type Name'), max_length=128,unique=True)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.name
@@ -17,6 +22,11 @@ class IssueType(models.Model):
 
 class IssuePriority(models.Model):
     name = models.CharField(_(u'Issue Priority'), max_length=128,unique=True)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.name
@@ -24,6 +34,11 @@ class IssuePriority(models.Model):
 
 class IssueCharField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.name
@@ -31,6 +46,11 @@ class IssueCharField(models.Model):
 
 class IssueTextField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.name
@@ -38,12 +58,22 @@ class IssueTextField(models.Model):
 
 class IssueImageField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.name
 
 class IssueFileField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.name
@@ -51,6 +81,11 @@ class IssueFileField(models.Model):
 
 class IssuePerson(models.Model):
     role = models.CharField(_(u'Role Name'), max_length=128)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.role
@@ -58,6 +93,11 @@ class IssuePerson(models.Model):
 
 class IssueStatus(models.Model):
     status = models.CharField(_(u'Status'), max_length=128,unique=True)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.status
@@ -69,6 +109,10 @@ class IssueFlow(models.Model):
     current = models.PositiveIntegerField(_(u'Current'), null=True, blank=True)
     next = models.PositiveIntegerField(_(u'Next'), null=True, blank=True)
     prev = models.PositiveIntegerField(_(u'Previous'), null=True, blank=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
 
     def __unicode__(self):
         return self.name
@@ -82,7 +126,11 @@ class IssueTemplate(models.Model):
     file_fields = models.ManyToManyField(IssueFileField, verbose_name=_(u'File Fields'),null=True, blank=True)
     people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
     project = models.ForeignKey(Project,verbose_name=_(u'Project'), null=True, blank=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
+    class Meta:
+        ordering = ['-entry_date']
+        
     def __unicode__(self):
         return self.name
 
