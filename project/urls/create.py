@@ -1,46 +1,52 @@
 from django.conf.urls import patterns, url
-from django.views.generic.edit import CreateView
+from project.views import CreateProjectView
 from project.models import (Project,ProjectCategory,ProjectVersion,Milestone,
                             MilestoneStatus)
 
 urlpatterns = patterns('',
 
     url(r'^project/',
-        CreateView.as_view(
+        CreateProjectView.as_view(
             model=Project,
-            template_name='project/create/project.html',
-            success_url='/project/view/project/'
+            success_url='/project/view/project/',
+            page_title='ITSY Create Project',
+            page_heading='Create a Project:'
         ),
         name='project'),
 
     url(r'^category/',
-        CreateView.as_view(
+        CreateProjectView.as_view(
             model=ProjectCategory,
-            template_name='project/create/category.html',
-            success_url='/project/view/category/'
+            success_url='/project/view/category/',
+            page_title='ITSY Create Project Category',
+            page_heading='Create a Project Category:'
         ),
         name='category'),
 
     url(r'^version/',
-        CreateView.as_view(
+        CreateProjectView.as_view(
             model=ProjectVersion,
-            template_name='project/create/version.html',
-            success_url='/project/view/version/'
+            success_url='/project/view/version/',
+            page_title='ITSY Create Project Version',
+            page_heading='Create a Project Version:'
         ),
         name='version'),
 
     url(r'^milestone/',
-        CreateView.as_view(
+        CreateProjectView.as_view(
             model=Milestone,
-            template_name='project/create/milestone.html',
-            success_url='/project/view/milestone/'
+            success_url='/project/view/milestone/',
+            page_title='ITSY Create Milestone',
+            page_heading='Create a Milestone:'
         ),
         name='milestone'),
 
     url(r'^milestatus/',
-        CreateView.as_view(
+        CreateProjectView.as_view(
             model=MilestoneStatus,
-            template_name='project/create/milestatus.html',
-            success_url='/project/view/milestatus/'
-        ),    name='milestatus'),
+            success_url='/project/view/milestatus/',
+            page_title='ITSY Create Milestone Status',
+            page_heading='Create a Milestone Status'
+        ),
+        name='milestatus'),
 )

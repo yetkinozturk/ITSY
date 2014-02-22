@@ -5,13 +5,13 @@
     <style>
 
     </style>
-    <title>ITSY Create Project Category</title>
+    <title>{{ page_title }}</title>
 </head>
 <body>
     {% include 'common/topnavigation.html' %}
     {% include 'project/leftnavigation.html' %}
 
-    <h4>Create Project Category</h4>
+    <h4>{{ page_heading }}</h4>
     <form method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
