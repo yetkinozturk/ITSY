@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'common/styles.html' %}
+    <style>
+
+    </style>
+    <title>ITSY Create Milestone</title>
+</head>
+<body>
+    {% include 'common/topnavigation.html' %}
+    {% include 'project/leftnavigation.html' %}
+
+    <h4>Create Milestone</h4>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+</body>
+</html>

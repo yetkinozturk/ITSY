@@ -10,6 +10,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', MainDashboardView.as_view(), name='home'),
     url(r'^issue/', include('issue.routes', namespace='issue')),
-
+    url(r'^project/', include('project.routes', namespace='project')),
     url(r'^admin/', include(admin.site.urls)),
 )
