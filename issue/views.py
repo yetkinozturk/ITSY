@@ -14,10 +14,12 @@ class CreateIssueDetailsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CreateIssueDetailsForm, self).__init__(*args, **kwargs)
-        issue = kwargs.get('instance',None)
+        issue = kwargs.get('instance', None)
         if issue:
             self.fields.pop('effort_calc')
-            self.fields['profile'] = forms.CharField(max_length=200)
+            self.fields.pop('template')
+            if issue.template:
+                self.fields['profile'] = forms.CharField(max_length=200)
 
 class CreateIssueDetails(UpdateView):
     slug = ''
