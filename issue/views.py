@@ -9,6 +9,11 @@ from account.models import Account
 
 
 class CreateIssueDetailsForm(forms.ModelForm):
+    """
+    This form is displayed in the second step of issue create.
+    init method is overriden to add fields from the selected issue template
+    save method is overriden to save related objects.
+    """
     original_fields = {}
     field_value_class = {}
     field_type_instance = {}
