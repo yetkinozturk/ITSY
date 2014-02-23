@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 from issue.models import Issue
+from account.models import Account
 
 
 class CreateIssueDetailsForm(forms.ModelForm):
@@ -15,11 +16,32 @@ class CreateIssueDetailsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreateIssueDetailsForm, self).__init__(*args, **kwargs)
         issue = kwargs.get('instance', None)
+
         if issue:
             self.fields.pop('effort_calc')
             self.fields.pop('template')
+
             if issue.template:
-                self.fields['profile'] = forms.CharField(max_length=200)
+
+                char_fields = issue.template.char_fields.all()
+                for field in char_fields:
+                    self.fields[field.name] = forms.CharField(max_length=255, required=field.required)
+
+                text_fields = issue.template.text_fields.all()
+                for field in text_fields:
+                    self.fields[field.name] = forms.CharField(widget=forms.Textarea, required=field.required)
+
+                image_fields = issue.template.image_fields.all()
+                for field in image_fields:
+                    self.fields[field.name] = forms.ImageField(required=field.required)
+
+                file_fields = issue.template.file_fields.all()
+                for field in file_fields:
+                    self.fields[field.name] = forms.FileField(required=field.required)
+
+                people = issue.template.people.all()
+                for field in people:
+                    self.fields[field.role] = forms.ModelChoiceField(queryset=Account.objects.all(),required=field.required)
 
 class CreateIssueDetails(UpdateView):
     slug = ''

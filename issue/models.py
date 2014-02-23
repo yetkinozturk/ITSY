@@ -11,7 +11,6 @@ from taggit.managers import TaggableManager
 
 class IssueType(models.Model):
     name = models.CharField(_(u'Type Name'), max_length=128,unique=True)
-    required = models.BooleanField(_(u'Is Required?'), default=False)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
     class Meta:
@@ -23,7 +22,6 @@ class IssueType(models.Model):
 
 class IssuePriority(models.Model):
     name = models.CharField(_(u'Issue Priority'), max_length=128,unique=True)
-    required = models.BooleanField(_(u'Is Required?'), default=False)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
     class Meta:
@@ -95,7 +93,6 @@ class IssuePerson(models.Model):
 
 class IssueStatus(models.Model):
     status = models.CharField(_(u'Status'), max_length=128,unique=True)
-    required = models.BooleanField(_(u'Is Required?'), default=False)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
     class Meta:
