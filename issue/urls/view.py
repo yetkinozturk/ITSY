@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from issue.models import (IssueType, IssueStatus, IssuePriority,IssueCharField,
                           IssueTextField, IssueImageField,IssueFileField,
-                          IssuePerson, IssueFlow, IssueTemplate, Issue)
+                          IssuePerson, IssueFlow, IssueTemplate, Issue,IssueTable)
 from issue.views import (ListIssueFieldView, ListIssueView)
 
 
@@ -98,7 +98,7 @@ urlpatterns = patterns('',
 
     url(r'^',
         ListIssueView.as_view(
-            queryset=Issue.objects.all(),
+            queryset=IssueTable(Issue.objects.all()),
             context_object_name='object_list',
         ),
         name='item'),

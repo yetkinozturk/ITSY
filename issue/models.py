@@ -7,6 +7,7 @@ from common.fields import ListField
 from project.models import ProjectVersion, Project
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
+import django_tables2 as tables
 
 
 class IssueType(models.Model):
@@ -208,3 +209,10 @@ class IssuePersonValue(models.Model):
     field = models.ForeignKey(IssuePerson)
     value = models.ForeignKey(Account, null=True, blank=True)
 
+
+class IssueTable(tables.Table):
+    edit_entries = tables.TemplateColumn('<a href="/issue/create/details/{{record.slug}}/">Edit</a>')
+
+    class Meta:
+        model = Issue
+        attrs = {"class": "paleblue"}
