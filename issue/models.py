@@ -147,7 +147,7 @@ class Issue(models.Model):
     status = models.ForeignKey(IssueStatus,verbose_name=_(u'Status'), null=True, blank=True)
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
     tags = TaggableManager(blank=True)
-    template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'), null=True, blank=True)
+    template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'),help_text=_(u'Provide a template even it is empty'))
     flow = models.ForeignKey(IssueFlow, verbose_name=_(u'Issue Flow'), null=True,blank=True)
     sub_issues = models.ManyToManyField('self', null=True, blank=True)
 
