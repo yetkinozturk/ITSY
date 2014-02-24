@@ -80,6 +80,29 @@ class IssueFileField(models.Model):
         return self.name
 
 
+class IssueBooleanField(models.Model):
+    name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
+
+    def __unicode__(self):
+        return self.name
+
+
+class IssueDatetimeField(models.Model):
+    name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
+
+    def __unicode__(self):
+        return self.name
+
+
 class IssuePerson(models.Model):
     role = models.CharField(_(u'Role Name'), max_length=128,unique=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
@@ -124,6 +147,8 @@ class IssueTemplate(models.Model):
     text_fields = models.ManyToManyField(IssueTextField, verbose_name=_(u'Text Fields'), null=True, blank=True)
     image_fields = models.ManyToManyField(IssueImageField, verbose_name=_(u'Image Fields'), null=True, blank=True)
     file_fields = models.ManyToManyField(IssueFileField, verbose_name=_(u'File Fields'),null=True, blank=True)
+    bool_fields = models.ManyToManyField(IssueBooleanField,verbose_name=_(u'Boolean Fields'), null=True, blank=True)
+    date_fields = models.ManyToManyField(IssueDatetimeField,verbose_name=_(u'Datetime Fields'),null=True,blank=True)
     people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
     project = models.ForeignKey(Project,verbose_name=_(u'Project'))
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
@@ -210,9 +235,22 @@ class IssuePersonValue(models.Model):
     value = models.ForeignKey(Account, null=True, blank=True)
 
 
+class IssueBoolValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssueBooleanField)
+    value = models.BooleanField(_(u'Field Value'), default=False)
+
+
+class IssueDateValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssueDatetimeField)
+    value = models.DateTimeField(_(u'Field Value'),null=True,blank=True)
+
+
 class IssueTable(tables.Table):
     edit_entries = tables.TemplateColumn('<a href="/issue/create/details/{{record.slug}}/">Edit</a>')
 
     class Meta:
         model = Issue
         attrs = {"class": "paleblue"}
+        exclude = ('template','slug','effort_calc','id','flow')

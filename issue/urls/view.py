@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 from issue.models import (IssueType, IssueStatus, IssuePriority,IssueCharField,
                           IssueTextField, IssueImageField,IssueFileField,
-                          IssuePerson, IssueFlow, IssueTemplate, Issue,IssueTable)
+                          IssuePerson, IssueFlow, IssueTemplate, Issue, IssueTable,
+                          IssueBooleanField, IssueDatetimeField)
 from issue.views import (ListIssueFieldView, ListIssueView)
 
 
@@ -42,6 +43,24 @@ urlpatterns = patterns('',
             page_heading='Issue Text Fields:'
         ),
         name='char'),
+
+    url(r'^bool/',
+        ListIssueFieldView.as_view(
+            queryset=IssueBooleanField.objects.all(),
+            context_object_name='object_list',
+            page_title='ITSY Issue Boolean Fields',
+            page_heading='Issue Boolean Fields:'
+        ),
+        name='bool'),
+
+    url(r'^date/',
+    ListIssueFieldView.as_view(
+        queryset=IssueDatetimeField.objects.all(),
+        context_object_name='object_list',
+        page_title='ITSY Issue Datetime Fields',
+        page_heading='Issue Datetime Fields:'
+    ),
+    name='date'),
 
     url(r'^text/',
         ListIssueFieldView.as_view(
