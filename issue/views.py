@@ -3,8 +3,10 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from django import forms
+from django_tables2   import RequestConfig
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
-                          IssueFileValue, IssuePersonValue)
+                          IssueFileValue, IssuePersonValue, IssueDateValue,
+                          IssueBoolValue)
 from account.models import Account
 
 
@@ -51,6 +53,28 @@ class CreateIssueDetailsForm(forms.ModelForm):
                         item = IssueTextValue.objects.get(issue=issue,field=field)
                         self.fields[field.name].initial = item.value
                     except IssueTextValue.DoesNotExist:
+                        pass
+
+                bool_fields = issue.template.bool_fields.all()
+                for field in bool_fields:
+                    self.fields[field.name] = forms.BooleanField()
+                    self.field_value_class[field.name] = IssueBoolValue
+                    self.field_type_instance[field.name] = field
+                    try:
+                        item = IssueBoolValue.objects.get(issue=issue,field=field)
+                        self.fields[field.name].initial = item.value
+                    except IssueBoolValue.DoesNotExist:
+                        pass
+
+                date_fields = issue.template.date_fields.all()
+                for field in date_fields:
+                    self.fields[field.name] = forms.DateTimeField(required=field.required)
+                    self.field_value_class[field.name] = IssueDateValue
+                    self.field_type_instance[field.name] = field
+                    try:
+                        item = IssueDateValue.objects.get(issue=issue,field=field)
+                        self.fields[field.name].initial = item.value
+                    except IssueDateValue.DoesNotExist:
                         pass
 
                 image_fields = issue.template.image_fields.all()
@@ -155,3 +179,7 @@ class ListIssueFieldView(ListView):
 
 class ListIssueView(ListView):
     template_name = 'issue/view/issue.html'
+
+    def get(self, request, *args, **kwargs):
+        RequestConfig(request).configure(self.queryset)
+        return super(ListIssueView, self).get(request, *args, **kwargs)
