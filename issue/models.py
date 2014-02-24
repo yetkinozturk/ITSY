@@ -1,12 +1,13 @@
 import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
+from autoslug import AutoSlugField
+from taggit.managers import TaggableManager
 from account.models import Account
 from common.models import Comment
 from common.fields import ListField
 from project.models import ProjectVersion, Project
-from autoslug import AutoSlugField
-from taggit.managers import TaggableManager
 import django_tables2 as tables
 
 
@@ -103,6 +104,34 @@ class IssueDatetimeField(models.Model):
         return self.name
 
 
+class IssueChoiceField(models.Model):
+    name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    choices = models.TextField(_(u'Choices'),help_text=_(u'Use comma separated values ie: 1,2,3,4'))
+    required = models.BooleanField(_(u'Is Required?'), default=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+
+    class Meta:
+        ordering = ['-entry_date']
+
+    def __unicode__(self):
+        return self.name
+
+    def clean(self,*args, **kwargs):
+        super(IssueChoiceField, self).clean(*args, **kwargs)
+        if self.name and self.choices:
+            choice_arr = []
+            try:
+                choice_arr = self.choices.split(',')
+                for c in choice_arr:
+                    if not len(c) > 0:
+                        raise ValidationError(_(u'Use one comma for each item ie: home,tree,car,4'))
+            except:
+                raise ValidationError(_(u'Choices should be in format: 1,2,3,4,5,6'))
+        else:
+            raise ValidationError(_(u'This fields are required'))
+
+
+
 class IssuePerson(models.Model):
     role = models.CharField(_(u'Role Name'), max_length=128,unique=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
@@ -148,6 +177,7 @@ class IssueTemplate(models.Model):
     image_fields = models.ManyToManyField(IssueImageField, verbose_name=_(u'Image Fields'), null=True, blank=True)
     file_fields = models.ManyToManyField(IssueFileField, verbose_name=_(u'File Fields'),null=True, blank=True)
     bool_fields = models.ManyToManyField(IssueBooleanField,verbose_name=_(u'Boolean Fields'), null=True, blank=True)
+    choice_fields = models.ManyToManyField(IssueChoiceField,verbose_name=_(u'Choice Fields'), null=True, blank=True)
     date_fields = models.ManyToManyField(IssueDatetimeField,verbose_name=_(u'Datetime Fields'),null=True,blank=True)
     people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
     project = models.ForeignKey(Project,verbose_name=_(u'Project'))
@@ -245,6 +275,11 @@ class IssueDateValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueDatetimeField)
     value = models.DateTimeField(_(u'Field Value'),null=True,blank=True)
+
+class IssueChoiceValue(models.Model):
+    issue = models.ForeignKey(Issue)
+    field = models.ForeignKey(IssueChoiceField)
+    value = models.CharField(_(u'Field Value'),max_length=255, null=True, blank=True)
 
 
 class IssueTable(tables.Table):

@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from issue.models import (IssueType, IssueStatus, IssuePriority,IssueCharField,
                           IssueTextField, IssueImageField,IssueFileField,
                           IssuePerson, IssueFlow, IssueTemplate, Issue, IssueTable,
-                          IssueBooleanField, IssueDatetimeField)
+                          IssueBooleanField, IssueDatetimeField, IssueChoiceField)
 from issue.views import (ListIssueFieldView, ListIssueView)
 
 
@@ -61,6 +61,15 @@ urlpatterns = patterns('',
         page_heading='Issue Datetime Fields:'
     ),
     name='date'),
+
+    url(r'^choice/',
+    ListIssueFieldView.as_view(
+        queryset=IssueChoiceField.objects.all(),
+        context_object_name='object_list',
+        page_title='ITSY Issue Choice Fields',
+        page_heading='Issue Choice Fields:'
+    ),
+    name='choice'),
 
     url(r'^text/',
         ListIssueFieldView.as_view(

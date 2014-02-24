@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from issue.models import (IssueType, IssueStatus, IssuePriority,IssueCharField,
                           IssueTextField, IssueImageField,IssueFileField,
                           IssuePerson, IssueFlow, IssueTemplate, Issue,
-                          IssueDatetimeField, IssueBooleanField)
+                          IssueDatetimeField, IssueBooleanField,IssueChoiceField)
 from issue.views import (CreateIssueView, CreateIssueFlow, CreateIssueField,
                          CreateIssueDetails)
 
@@ -48,7 +48,7 @@ urlpatterns = patterns('',
     url(r'^bool/',
         CreateIssueField.as_view(
             model=IssueBooleanField,
-            success_url='/issue/view/char/',
+            success_url='/issue/view/bool/',
             page_title='ITSY Create Issue Boolean Field',
             page_heading='Create An Issue Boolean Field'
         ),
@@ -62,6 +62,15 @@ urlpatterns = patterns('',
             page_heading='Create An Issue Datetime Field'
         ),
         name='date'),
+
+    url(r'^choice/',
+        CreateIssueField.as_view(
+            model=IssueChoiceField,
+            success_url='/issue/view/choice/',
+            page_title='ITSY Create Issue Choice Field',
+            page_heading='Create An Issue Choice Field'
+        ),
+        name='choice'),
 
     url(r'^text/',
         CreateIssueField.as_view(
@@ -111,7 +120,8 @@ urlpatterns = patterns('',
             model=IssueTemplate,
             success_url='/issue/view/template/',
             fields = [
-                'name','char_fields','text_fields','image_fields','file_fields',
+                'name','char_fields','text_fields','bool_fields','date_fields',
+                'choice_fields','image_fields','file_fields',
                 'people','project',
             ],
             page_title='ITSY Create Issue Template',

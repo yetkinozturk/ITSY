@@ -6,7 +6,7 @@ from django import forms
 from django_tables2   import RequestConfig
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
-                          IssueBoolValue)
+                          IssueBoolValue, IssueChoiceValue)
 from account.models import Account
 
 
@@ -57,13 +57,24 @@ class CreateIssueDetailsForm(forms.ModelForm):
 
                 bool_fields = issue.template.bool_fields.all()
                 for field in bool_fields:
-                    self.fields[field.name] = forms.BooleanField()
+                    self.fields[field.name] = forms.BooleanField(required=False)
                     self.field_value_class[field.name] = IssueBoolValue
                     self.field_type_instance[field.name] = field
                     try:
                         item = IssueBoolValue.objects.get(issue=issue,field=field)
                         self.fields[field.name].initial = item.value
                     except IssueBoolValue.DoesNotExist:
+                        pass
+
+                choice_fields = issue.template.choice_fields.all()
+                for field in choice_fields:
+                    self.fields[field.name] = forms.ChoiceField(choices=[ (str(i), str(i)) for i in field.choices.split(',')],required=field.required)
+                    self.field_value_class[field.name] = IssueChoiceValue
+                    self.field_type_instance[field.name] = field
+                    try:
+                        item = IssueChoiceValue.objects.get(issue=issue,field=field)
+                        self.fields[field.name].initial = item.value
+                    except IssueChoiceValue.DoesNotExist:
                         pass
 
                 date_fields = issue.template.date_fields.all()
