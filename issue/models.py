@@ -205,7 +205,7 @@ class Issue(models.Model):
     tags = TaggableManager(blank=True)
     template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'),help_text=_(u'Provide a template even it is empty'))
     flow = models.ForeignKey(IssueFlow, verbose_name=_(u'Issue Flow'), null=True,blank=True)
-    sub_issues = models.ManyToManyField('self', null=True, blank=True)
+    sub_issues = models.ManyToManyField('self', symmetrical=False,null=True, blank=True)
 
     is_draft = models.BooleanField(_(u'Draft'), default=True)
     resolved = models.BooleanField(_(u'Resolved'), default=False)
