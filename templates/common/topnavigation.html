@@ -36,14 +36,12 @@
             <li><a href="{% url 'issue:create:item' %}">Create Issue </a></li>
             <li class="divider"></li>
             <li><b>Recent Issues:</b></li>
-            <li><a href="#">Issue 1 </a></li>
-            <li><a href="#">Issue 2 </a></li>
-            <li><a href="#">Issue 3 </a></li>
-            <li><a href="#">Issue 4 </a></li>
+{#            <li><a href="#">Issue 1 </a></li>#}
+{#            <li><a href="#">Issue 2 </a></li>#}
+{#            <li><a href="#">Issue 3 </a></li>#}
+{#            <li><a href="#">Issue 4 </a></li>#}
             <li class="divider"></li>
-            <li><a href="#">View All Issues</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Manage Issues</a></li>
+            <li><a href="{% url 'issue:view:item' %}">View All Issues</a></li>
             <li class="divider"></li>
             <li><b>Filters:</b></li>
             <li><a href="#">Filter 1</a></li>
@@ -59,13 +57,13 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Project 1</a></li>
-            <li><a href="#">Project 2</a></li>
-            <li><a href="#">Project 3</a></li>
+{#            <li><a href="#">Project 1</a></li>#}
+{#            <li><a href="#">Project 2</a></li>#}
+{#            <li><a href="#">Project 3</a></li>#}
             <li class="divider"></li>
-            <li><a href="#">View All Projects</a></li>
+            <li><a href="{% url 'project:view:project' %}">View All Projects</a></li>
             <li class="divider"></li>
-            <li><a href="/project/view/project/">Manage Projects</a></li>
+            <li><a href="{% url 'project:create:project' %}">Manage Projects</a></li>
           </ul>
         </li>
       </ul>

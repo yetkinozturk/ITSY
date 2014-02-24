@@ -283,7 +283,8 @@ class IssueChoiceValue(models.Model):
 
 
 class IssueTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/issue/create/details/{{record.slug}}/">Edit</a>')
+    edit_entries = tables.TemplateColumn('<a href="/issue/create/details/{{record.slug}}/" style="color:red">Edit</a>')
+    delete_entries = tables.TemplateColumn('<a href="/issue/delete/item/{{record.id}}/" style="color:red">Delete</a>')
 
     class Meta:
         model = Issue

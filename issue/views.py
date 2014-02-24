@@ -1,5 +1,6 @@
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from django import forms
@@ -194,3 +195,21 @@ class ListIssueView(ListView):
     def get(self, request, *args, **kwargs):
         RequestConfig(request).configure(self.queryset)
         return super(ListIssueView, self).get(request, *args, **kwargs)
+
+
+class DeleteIssueItem(DeleteView):
+    obj_id = -1
+    page_title='ITSY Delete Issue Type'
+    page_heading='Delete An Issue Type'
+    template_name = 'issue/create/delete.html'
+    context_object_name = 'object'
+    def get(self, request, *args, **kwargs):
+        self.obj_id = kwargs.get('id')
+        return super(DeleteIssueItem, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.obj_id = kwargs.get('id')
+        return super(DeleteIssueItem, self).post(request, *args, **kwargs)
+
+    def get_object(self):
+        return get_object_or_404(self.model, id=self.obj_id)
