@@ -8,7 +8,7 @@ from account.models import Account
 from common.models import Comment
 from common.fields import ListField
 from project.models import ProjectVersion, Project
-import django_tables2 as tables
+
 
 
 class IssueType(models.Model):
@@ -280,13 +280,3 @@ class IssueChoiceValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueChoiceField)
     value = models.CharField(_(u'Field Value'),max_length=255, null=True, blank=True)
-
-
-class IssueTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/issue/create/details/{{record.slug}}/" style="color:red">Edit</a>')
-    delete_entries = tables.TemplateColumn('<a href="/issue/delete/item/{{record.id}}/" style="color:red">Delete</a>')
-
-    class Meta:
-        model = Issue
-        attrs = {"class": "paleblue"}
-        exclude = ('template','slug','effort_calc','id','flow')

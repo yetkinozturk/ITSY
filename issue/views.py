@@ -188,6 +188,10 @@ class ListIssueFieldView(ListView):
         context['page_heading'] = self.page_heading
         return context
 
+    def get(self, request, *args, **kwargs):
+        RequestConfig(request).configure(self.queryset)
+        return super(ListIssueFieldView, self).get(request, *args, **kwargs)
+
 
 class ListIssueView(ListView):
     template_name = 'issue/view/issue.html'
