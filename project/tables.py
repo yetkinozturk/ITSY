@@ -19,7 +19,7 @@ class MilestoneTable(tables.Table):
     class Meta:
         model = project_models.Milestone
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','slug','effort_calc')
 
 
 class ProjectCategoryTable(tables.Table):
@@ -39,7 +39,7 @@ class ProjectTable(tables.Table):
     class Meta:
         model = project_models.Project
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','slug')
 
 
 class ProjectVersionTable(tables.Table):
