@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from account.models import Account
 from autoslug import AutoSlugField
 
+
 class MilestoneStatus(models.Model):
     status = models.CharField(_(u'Status'), max_length=128)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)

@@ -3,15 +3,23 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.shortcuts import get_object_or_404
+from django_tables2   import RequestConfig
+
+
 class ListProjectView(ListView):
     page_title = ''
     page_heading = ''
     template_name = 'project/view/list.html'
+    model = None
+    table = None
 
     def get_context_data(self, **kwargs):
         context = super(ListProjectView, self).get_context_data(**kwargs)
+        tb = self.table(self.model.objects.all())
+        RequestConfig(self.request).configure(tb)
         context['page_title'] = self.page_title
         context['page_heading'] = self.page_heading
+        context['object_list'] = tb
         return context
 
 
@@ -54,7 +62,7 @@ class DeleteProjectItem(DeleteView):
 class UpdateProjectItem(UpdateView):
     page_title = ''
     page_heading = ''
-    template_name = 'issue/edit/issuefield.html'
+    template_name = 'project/edit/item.html'
     obj_id = -1
     post_fix = ''
 

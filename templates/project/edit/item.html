@@ -11,7 +11,7 @@
 <body>
     {% include 'common/topnavigation.html' %}
     <div id="updateitemid" class="updateitemform" style="width: 100%; overflow: hidden;">
-        {% include 'issue/leftnavigation.html' %}
+        {% include 'project/leftnavigation.html' %}
         <div style="margin-left: 240px;">
             <form id="create-issue-form" action="/issue/edit/{{ post_fix }}/{{object.id}}/" method="post">{% csrf_token %}
               <h3>{{ page_heading }}</h3>
