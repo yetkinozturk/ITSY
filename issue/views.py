@@ -207,23 +207,32 @@ class ListIssueFieldView(ListView):
     page_title = ''
     page_heading = ''
     template_name = 'issue/view/issuefield.html'
+    model = None
+    table = None
 
     def get_context_data(self, **kwargs):
         context = super(ListIssueFieldView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title
         context['page_heading'] = self.page_heading
+        tb = self.table(self.model.objects.all())
+        RequestConfig(self.request).configure(tb)
+        context['object_list'] = tb
         return context
-
-    def get(self, request, *args, **kwargs):
-        RequestConfig(request).configure(self.queryset)
-        return super(ListIssueFieldView, self).get(request, *args, **kwargs)
 
 
 class ListIssueView(ListView):
     template_name = 'issue/view/issue.html'
+    table=None
+    model = None
+
+    def get_context_data(self, **kwargs):
+        context = super(ListIssueView, self).get_context_data(**kwargs)
+        tb = self.table(self.model.objects.all())
+        RequestConfig(self.request).configure(tb)
+        context['object_list'] = tb
+        return context
 
     def get(self, request, *args, **kwargs):
-        RequestConfig(request).configure(self.queryset)
         return super(ListIssueView, self).get(request, *args, **kwargs)
 
 
