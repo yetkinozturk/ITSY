@@ -20,7 +20,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -33,8 +32,11 @@ INSTALLED_APPS = (
     'django_tables2',
     'bootstrap_toolkit',
     'taggit',
+    'braces',
+    'captcha',
     'account',
     'common',
+    'common.templatetags',
     'dashboard',
     'issue',
     'project',

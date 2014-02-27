@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'common/styles.html' %}
+    <title></title>
+</head>
+<body>
+
+{% block content %}
+
+<form method="post" action="/account/register/">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td>{{ form.email.label_tag }}</td>
+        <td>{{ form.email }}</td>
+        <td>{{ form.email.errors }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.password1.label_tag }}</td>
+        <td>{{ form.password1 }}</td>
+        <td>{{ form.password1.errors }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.password2.label_tag }}</td>
+        <td>{{ form.password2 }}</td>
+        <td>{{ form.password2.errors }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.team.label_tag }}</td>
+        <td>{{ form.team }}</td>
+        <td>{{ form.team.errors }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.role.label_tag }}</td>
+        <td>{{ form.role }}</td>
+        <td>{{ form.role.errors }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.captcha.label_tag }}</td>
+        <td>{{ form.captcha }}</td>
+        <td>{{ form.captcha.errors }}</td>
+    </tr>
+    </table>
+
+    <input type="submit" value="submit" />
+</form>
+{% endblock %}
+</body>
+</html>

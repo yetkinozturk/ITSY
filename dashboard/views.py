@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-
+from braces.views import LoginRequiredMixin
 
 class MainDashboardView(View):
     template_name = 'dashboard/main.html'
