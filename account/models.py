@@ -17,24 +17,8 @@ class AccountTeam(models.Model):
         return self.name
 
 
-# class Account(models.Model):
-#     ACCOUNT_TYPES = (
-#         ('SA', 'Super Admin'),
-#         ('AD', 'Admin'),
-#         ('US', 'User'),
-#     )
-#     user = models.OneToOneField(User)
-#     role = models.ForeignKey(AccountRole, verbose_name=_(u'Role'), null=True, blank=True)
-#     team = models.ForeignKey(AccountTeam, verbose_name=_(u'Team'), null=True, blank=True)
-#     type = models.CharField(_(u'Account Type'), max_length=4, choices=ACCOUNT_TYPES, default='US')
-#     follows = models.ManyToManyField('self', related_name='followers', symmetrical=False, null=True, blank=True)
-#
-#     def __unicode__(self):
-#         return u'%s %s' % (self.user.first_name, self.user.last_name)
-
-
 class AccountManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self, email, password=None):
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -44,8 +28,8 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password):
-        u = self.create_user(username,password=password)
+    def create_superuser(self, email, password):
+        u = self.create_user(email=email, password=password)
         u.is_admin = True
         u.save(using=self._db)
         return u
@@ -68,7 +52,7 @@ class Account(AbstractBaseUser):
     objects = AccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email',]
+    #REQUIRED_FIELDS = ['email',]
 
     def __unicode__(self):
         return u'%s %s' % (self.first_name, self.last_name)
