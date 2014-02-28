@@ -49,6 +49,9 @@ class Account(AbstractBaseUser):
     type = models.CharField(_(u'Account Type'), max_length=4, choices=ACCOUNT_TYPES, default='US')
     follows = models.ManyToManyField('self', related_name='followers', symmetrical=False, null=True, blank=True)
     email = models.EmailField(verbose_name='email address',max_length=255, unique=True)
+    phone = models.CharField(_(u'Phone'), max_length=30, null=True, blank=True)
+    im = models.CharField(_(u'IM'), max_length=255, null=True, blank=True)
+    website = models.CharField(_(u'Website'),max_length=1024, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
