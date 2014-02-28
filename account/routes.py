@@ -1,11 +1,10 @@
-from django.conf.urls import patterns, include, url
-from django.core.urlresolvers import reverse
-from account.views import RegistrationView, LoginView, UpdateUser,LogoutView
+from django.conf.urls import patterns, url
+from account.views import RegistrationView, UpdateUser
 
 
 urlpatterns = patterns('',
     url(r'^register/', RegistrationView.as_view(success_url='/')),
     url(r'^login/', 'django.contrib.auth.views.login',{'template_name': 'account/login.html'}),
-    url(r'^logout/', LogoutView.as_view()),
+    url(r'^logout/', 'django.contrib.auth.views.logout',{'next_page': '/account/login/'}),
     url(r'^update/', UpdateUser.as_view(success_url='/')),
 )

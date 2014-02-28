@@ -1,8 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib.auth import login as auth_login
-from django.http import HttpResponseRedirect
 from captcha.fields import CaptchaField
 from account.models import Account
 
@@ -38,16 +35,3 @@ class UserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial['password']
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(label=_(u'Username'))
-    password = forms.CharField(label=_(u'Password'),widget=forms.PasswordInput)
-    captcha = CaptchaField()
-
-    def form_valid(self, form):
-        auth_login(self.request, form.get_user())
-        return HttpResponseRedirect("/")
-
-    def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form))

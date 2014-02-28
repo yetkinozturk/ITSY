@@ -33,7 +33,6 @@ INSTALLED_APPS = (
     'bootstrap_toolkit',
     'taggit',
     'braces',
-    'captcha',
     'account',
     'common',
     'common.templatetags',
@@ -44,6 +43,7 @@ INSTALLED_APPS = (
 
 AUTH_USER_MODEL = 'account.Account'
 LOGIN_REDIRECT_URL = "/"
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
