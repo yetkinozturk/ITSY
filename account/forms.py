@@ -1,13 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from captcha.fields import CaptchaField
 from account.models import Account
 
 
 class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
-    captcha = CaptchaField()
     class Meta:
         model = Account
         fields = ("email","role","team")
