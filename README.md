@@ -12,7 +12,6 @@ ITSY is an issue tracking system built in Django
 - django-bootstrap-toolkit==2.15.0
 - django-tables2==0.15.0
 - django-braces==1.3.1
-- Pillow==2.3.0
 
 ### Instructions
 
