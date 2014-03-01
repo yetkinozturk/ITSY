@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
 from django import forms
 from haystack.forms import SearchForm
+from haystack.query import SearchQuerySet
 from django_tables2 import RequestConfig
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
@@ -274,8 +275,9 @@ class IssueSearch(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IssueSearch, self).get_context_data(**kwargs)
-        form = SearchForm(self.request.GET)
-        context['issue_list'] = form.search()
+        context['issue_list'] = SearchQuerySet().autocomplete(
+            content_auto=self.request.GET.get('q','')
+        )
         return context
 
 
