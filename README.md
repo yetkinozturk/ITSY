@@ -27,3 +27,4 @@ ITSY is an issue tracking system built in Django
 - Put fields you created to a issue template
 - Create an Issue using the template for your project/version
 
+
