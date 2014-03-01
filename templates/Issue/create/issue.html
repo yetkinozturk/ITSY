@@ -1,5 +1,4 @@
 {% extends 'issue/issuebase.html' %}
-
 {% block content %}
         <div style="margin-left: 240px;">
             <form id="create-issue-form" action="{% url 'issue:create:item' %}" method="post">{% csrf_token %}

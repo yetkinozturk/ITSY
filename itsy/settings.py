@@ -105,5 +105,3 @@ HAYSTACK_CONNECTIONS = {
         'INDEX_NAME': 'haystack',
     },
 }
-
-SESSION_COOKIE_AGE = 360

@@ -4,7 +4,7 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from django import forms
-from django_tables2   import RequestConfig
+from django_tables2 import RequestConfig
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
                           IssueBoolValue, IssueChoiceValue)
