@@ -10,3 +10,4 @@ class RegistrationView(CreateView):
 
 class UpdateUser(UpdateView):
     pass
+
