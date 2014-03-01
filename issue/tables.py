@@ -139,4 +139,4 @@ class IssueTable(tables.Table):
     class Meta:
         model = issue_models.Issue
         attrs = {"class": "paleblue"}
-        exclude = ('template','slug','effort_calc','id','flow')
+        exclude = ('template','slug','effort_calc','id')

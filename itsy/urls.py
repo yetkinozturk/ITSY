@@ -12,6 +12,6 @@ urlpatterns = patterns('',
     url(r'^issue/', include('issue.routes', namespace='issue')),
     url(r'^project/', include('project.routes', namespace='project')),
     url(r'^account/', include('account.routes',namespace='account')),
-    url(r'^captcha/', include('captcha.urls')),
+    url(r'^search/', include('haystack.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

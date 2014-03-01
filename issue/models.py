@@ -181,6 +181,7 @@ class IssueTemplate(models.Model):
     date_fields = models.ManyToManyField(IssueDatetimeField,verbose_name=_(u'Datetime Fields'),null=True,blank=True)
     people = models.ManyToManyField(IssuePerson, verbose_name=_(u'People'), null=True, blank=True )
     project = models.ForeignKey(Project,verbose_name=_(u'Project'))
+    flow = models.ForeignKey(IssueFlow, verbose_name=_(u'Issue Flow'), null=True,blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
     class Meta:
@@ -204,7 +205,6 @@ class Issue(models.Model):
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
     tags = TaggableManager(blank=True)
     template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'),help_text=_(u'Provide a template even it is empty'))
-    flow = models.ForeignKey(IssueFlow, verbose_name=_(u'Issue Flow'), null=True,blank=True)
     sub_issues = models.ManyToManyField('self', symmetrical=False,null=True, blank=True)
 
     is_draft = models.BooleanField(_(u'Draft'), default=True)

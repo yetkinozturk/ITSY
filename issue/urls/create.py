@@ -143,7 +143,7 @@ urlpatterns = patterns('',
             success_url='/issue/create/details/',
             fields = [
                 'title', 'summary', 'effort', 'project_version', 'type',
-                'status', 'priority', 'template', 'flow', 'sub_issues','due_date'
+                'status', 'priority', 'template', 'sub_issues','due_date'
             ],
             template_name = 'issue/create/issue.html'
         ),

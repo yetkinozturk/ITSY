@@ -12,12 +12,18 @@ ITSY is an issue tracking system built in Django
 - django-bootstrap-toolkit==2.15.0
 - django-tables2==0.15.0
 - django-braces==1.3.1
-- Pillow==2.3.0
+- django-haystack==2.1.0
+- haystack==0.15
+- pyelasticsearch==0.6.1
+
+- elasticsearch
 
 ### Instructions
 
+- Start elasticsearch ie: bin/elasticsearch
 - Create a project
 - Create a project version
 - Create charfields, textfields, etc...
 - Put fields you created to a issue template
 - Create an Issue using the template for your project/version
+
