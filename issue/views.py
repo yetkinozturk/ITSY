@@ -2,8 +2,10 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
+from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
 from django import forms
+from haystack.forms import SearchForm
 from django_tables2 import RequestConfig
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
@@ -259,3 +261,29 @@ class DeleteIssueItem(DeleteView):
         context['page_title'] = self.page_title
         context['page_heading'] = self.page_heading
         return context
+
+
+class IssueSearch(TemplateView):
+    query = ''
+    template_name = 'issue/search/simple.html'
+    def get(self, request, *args, **kwargs):
+        return super(IssueSearch, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return super(IssueSearch, self).post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(IssueSearch, self).get_context_data(**kwargs)
+        form = SearchForm(self.request.GET)
+        context['issue_list'] = form.search()
+        return context
+
+
+class IssueAdvancedSearch(TemplateView):
+    query = ''
+    template_name = 'issue/search/advanced.html'
+    def get(self, request, *args, **kwargs):
+        return super(IssueAdvancedSearch, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return super(IssueAdvancedSearch, self).post(request, *args, **kwargs)

@@ -1,0 +1,8 @@
+{% extends 'issue/issuebase.html' %}
+{% block content %}
+    {% if issue_list %}
+        {{ issue_list }}
+    {% else %}
+        <h4>No Issue Found</h4>
+    {% endif %}
+{% endblock %}
