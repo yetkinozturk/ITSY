@@ -2,20 +2,18 @@
 {% load commontags %}
 {% block content %}
 
-<div class="container">
+    <div class="container">
+        <form method="post" action="/account/login/" class="form-signin">
+            {% csrf_token %}
+            {% if form.errors %}
+                <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+            <h4 class="form-signin-heading">Please sign in</h4>
 
-
-    <form method="post" action="/account/login/" class="form-signin">
-        {% csrf_token %}
-        {% if form.errors %}
-            <p>Your username and password didn't match. Please try again.</p>
-        {% endif %}
-        <h4 class="form-signin-heading">Please sign in</h4>
-
-        <input type="text" class="input-block-level" placeholder="Email address" id="id_username" name="username" maxlength="254">
-        <input type="password" class="input-block-level" placeholder="Password" id="id_password" name="password">
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-        <a href="/account/register/">register</a>
-    </form>
-</div>
+            <input type="text" class="input-block-level" placeholder="Email address" id="id_username" name="username" maxlength="254">
+            <input type="password" class="input-block-level" placeholder="Password" id="id_password" name="password">
+            <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+            <a href="/account/register/">register</a>
+        </form>
+    </div>
 {% endblock %}

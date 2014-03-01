@@ -1,55 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% include 'common/styles.html' %}
-    <title></title>
-</head>
-<body>
-
+{% extends 'account/accountbase.html' %}
+{% load commontags %}
 {% block content %}
 
-<form method="post" action="/account/register/">
+<div class="container">
+
+<form method="post" action="/account/register/" class="form-register">
     {% csrf_token %}
+    {{ form.errors }}
+    <input type="text" class="input-block-level" placeholder="Email address" id="id_email" name="email" maxlength="254">
+    <input type="password" class="input-block-level" placeholder="Password" id="id_password1" name="password1">
+    <input type="password" class="input-block-level" placeholder="Password Confirm" id="id_password2" name="password2">
+    <input type="text" class="input-block-level" placeholder="First Name" id="id_firstname" name="firstname">
+    <input type="text" class="input-block-level" placeholder="Last Name" id="id_lastname" name="lastname" >
     <table>
     <tr>
-        <td>{{ form.email.label_tag }}</td>
-        <td>{{ form.email }}</td>
-        <td>{{ form.email.errors }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.password1.label_tag }}</td>
-        <td>{{ form.password1 }}</td>
-        <td>{{ form.password1.errors }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.password2.label_tag }}</td>
-        <td>{{ form.password2 }}</td>
-        <td>{{ form.password2.errors }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.firstname.label_tag }}</td>
-        <td>{{ form.firstname }}</td>
-        <td>{{ form.firstname.errors }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.lastname.label_tag }}</td>
-        <td>{{ form.lastname }}</td>
-        <td>{{ form.lastname.errors }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.team.label_tag }}</td>
+        <td>{{ form.team.label_tag }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td>{{ form.team }}</td>
-        <td>{{ form.team.errors }}</td>
     </tr>
     <tr>
         <td>{{ form.role.label_tag }}</td>
         <td>{{ form.role }}</td>
-        <td>{{ form.role.errors }}</td>
     </tr>
     </table>
-
-    <input type="submit" value="submit" />
+    <button class="btn btn-large btn-primary" type="submit">Register</button>
 </form>
+</div>
 {% endblock %}
-</body>
-</html>
