@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% include 'common/styles.html' %}
-    <style>
-
-    </style>
-    <title>{{ page_title }}</title>
-</head>
-<body>
-    {% include 'common/topnavigation.html' %}
-    <div id="createissueformid" class="createissueform" style="width: 100%; overflow: hidden;">
-        {% include 'issue/leftnavigation.html' %}
-        <div style="margin-left: 240px;">
-            <form method="post">
-            <h4>{{ page_heading }}</h4>
-            {% csrf_token %}
-            {{ form.as_p}}
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-            </form>
+{% extends 'issue/issuebase.html' %}
+{% block content %}
+    <div style="margin-left: 240px;">
+        <form method="post">
+        <h4>{{ page_heading }}</h4>
+        {% csrf_token %}
+        {{ form.as_p}}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
+        </form>
     </div>
-  </body>
-</html>
+{% endblock %}
