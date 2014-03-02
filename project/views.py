@@ -1,12 +1,11 @@
-from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
 from django.shortcuts import get_object_or_404
 from django_tables2   import RequestConfig
+from common.views import (LoginRequiredListView,LoginRequiredCreateView,
+                          LoginRequiredDeleteView,LoginRequiredUpdateView,
+                          LoginRequiredTemplateView)
 
 
-class ListProjectView(ListView):
+class ListProjectView(LoginRequiredListView):
     page_title = ''
     page_heading = ''
     template_name = 'project/view/list.html'
@@ -23,7 +22,7 @@ class ListProjectView(ListView):
         return context
 
 
-class CreateProjectView(CreateView):
+class CreateProjectView(LoginRequiredCreateView):
     page_title = ''
     page_heading = ''
     template_name = 'project/create/item.html'
@@ -35,7 +34,7 @@ class CreateProjectView(CreateView):
         return context
 
 
-class DeleteProjectItem(DeleteView):
+class DeleteProjectItem(LoginRequiredDeleteView):
     obj_id = -1
     page_title='ITSY Delete Project Item'
     page_heading='Delete Project Item:'
@@ -59,7 +58,7 @@ class DeleteProjectItem(DeleteView):
         context['page_heading'] = self.page_heading
         return context
 
-class UpdateProjectItem(UpdateView):
+class UpdateProjectItem(LoginRequiredUpdateView):
     page_title = ''
     page_heading = ''
     template_name = 'project/edit/item.html'

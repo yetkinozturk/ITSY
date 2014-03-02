@@ -1,8 +1,3 @@
-from django.views.generic.edit import CreateView
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
-from django.views.generic.list import ListView
-from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
 from django import forms
 from haystack.forms import SearchForm
@@ -12,6 +7,9 @@ from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue
                           IssueFileValue, IssuePersonValue, IssueDateValue,
                           IssueBoolValue, IssueChoiceValue)
 from account.models import Account
+from common.views import (LoginRequiredListView,LoginRequiredCreateView,
+                          LoginRequiredDeleteView,LoginRequiredUpdateView,
+                          LoginRequiredTemplateView)
 
 
 class CreateIssueDetailsForm(forms.ModelForm):
@@ -141,7 +139,7 @@ class CreateIssueDetailsForm(forms.ModelForm):
         return m
 
 
-class CreateIssueDetails(UpdateView):
+class CreateIssueDetails(LoginRequiredUpdateView):
     slug = ''
     context_object_name = 'issue'
     form_class = CreateIssueDetailsForm
@@ -158,17 +156,17 @@ class CreateIssueDetails(UpdateView):
         return get_object_or_404(Issue, slug=self.slug)
 
 
-class CreateIssueView(CreateView):
+class CreateIssueView(LoginRequiredCreateView):
 
     def get_success_url(self):
         return '/issue/create/details/%s/' % self.object.slug
 
 
-class CreateIssueFlow(CreateView):
+class CreateIssueFlow(LoginRequiredCreateView):
     pass
 
 
-class CreateIssueField(CreateView):
+class CreateIssueField(LoginRequiredCreateView):
     page_title = ''
     page_heading = ''
     template_name = 'issue/create/issuefield.html'
@@ -180,7 +178,7 @@ class CreateIssueField(CreateView):
         return context
 
 
-class UpdateIssueField(UpdateView):
+class UpdateIssueField(LoginRequiredUpdateView):
     page_title = ''
     page_heading = ''
     template_name = 'issue/edit/issuefield.html'
@@ -206,7 +204,7 @@ class UpdateIssueField(UpdateView):
         return get_object_or_404(self.model, id=self.obj_id)
 
 
-class ListIssueFieldView(ListView):
+class ListIssueFieldView(LoginRequiredListView):
     page_title = ''
     page_heading = ''
     template_name = 'issue/view/issuefield.html'
@@ -223,7 +221,7 @@ class ListIssueFieldView(ListView):
         return context
 
 
-class ListIssueView(ListView):
+class ListIssueView(LoginRequiredListView):
     template_name = 'issue/view/issue.html'
     table=None
     model = None
@@ -239,7 +237,7 @@ class ListIssueView(ListView):
         return super(ListIssueView, self).get(request, *args, **kwargs)
 
 
-class DeleteIssueItem(DeleteView):
+class DeleteIssueItem(LoginRequiredDeleteView):
     obj_id = -1
     page_title='ITSY Delete Issue Item'
     page_heading='Delete An Issue Item:'
@@ -264,7 +262,7 @@ class DeleteIssueItem(DeleteView):
         return context
 
 
-class IssueSearch(TemplateView):
+class IssueSearch(LoginRequiredTemplateView):
     query = ''
     template_name = 'issue/search/simple.html'
     def get(self, request, *args, **kwargs):
@@ -281,7 +279,7 @@ class IssueSearch(TemplateView):
         return context
 
 
-class IssueAdvancedSearch(TemplateView):
+class IssueAdvancedSearch(LoginRequiredTemplateView):
     query = ''
     template_name = 'issue/search/advanced.html'
     def get(self, request, *args, **kwargs):
