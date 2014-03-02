@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'dashboard',
     'issue',
     'project',
+    'django_vcs',
 )
 
 AUTH_USER_MODEL = 'account.Account'

@@ -1,0 +1,2 @@
+Taken from https://github.com/alex/django-vcs
+Modified according to new Django releases

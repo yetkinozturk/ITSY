@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^project/', include('project.routes', namespace='project')),
     url(r'^account/', include('account.routes',namespace='account')),
     url(r'^search/', include('haystack.urls')),
+    url(r'^vcs/', include('django_vcs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

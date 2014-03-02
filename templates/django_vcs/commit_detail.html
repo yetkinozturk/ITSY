@@ -1,0 +1,35 @@
+{% extends "django_vcs/base.html" %}
+
+{% load udiff %}
+
+{% block title %}
+    Details about commit {{ commit.commit_id }} on {{ repo.name }}
+{% endblock %}
+
+{% block extra_head %}
+    {% diff_css %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Details about commit {{ commit.commit_id }} on {{ repo.name }}
+    </h1>
+    <ul>
+        <li>Committed by: {{ commit.author }}</li>
+        <li>Committed at: {{ commit.time }}</li>
+        <li>Commit message: {{ commit.message }}</li>
+        <li>Affected files:
+            <ul>
+                {% for file in commit.files %}
+                    <li>
+                        <a href="{% url code_browser slug=repo.slug path=file %}?rev={{ commit.commit_id }}">
+                            {{ file }}
+                        <a/>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+
+    {{ commit.diff|render_diff }}
+{% endblock %}

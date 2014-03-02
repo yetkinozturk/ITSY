@@ -1,0 +1,26 @@
+{% extends "django_vcs/base.html" %}
+
+{% block title %}Repository List{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>VCS</th>
+            <th>Last Commit Date</th>
+            <th>Last Commit Message</th>
+        </tr>
+        {% for repo in repos %}
+            <tr>
+                <td>
+                    <a href="{{ repo.get_absolute_url }}">{{ repo.name }}</a>
+                </td>
+                <td>{{ repo.get_repository_type_display }}</td>
+                {% with repo.get_recent_commits.0 as commit %}
+                    <td>{{ commit.time }}</td>
+                    <td>{{ commit.message }}</td>
+                {% endwith %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from braces.views import LoginRequiredMixin
+from common.views import LoginRequiredTemplateView
 
 
-class MainDashboardView(LoginRequiredMixin,View):
+class MainDashboardView(LoginRequiredTemplateView):
     template_name = 'dashboard/main.html'
-    login_url = "/account/login/"
 
     def get(self,request):
         content = {}

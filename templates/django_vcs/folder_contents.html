@@ -1,0 +1,31 @@
+{% extends "django_vcs/base.html" %}
+
+{% block title %}
+    {{ path }} in {{ repo.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Contents of {{ path }}
+    </h1>
+    <h3>Folders</h3>
+    <ul>
+        {% for path, folder in folders %}
+            <li>
+                <a href="{% url code_browser slug=repo.slug path=path %}/">
+                    {{ folder }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <h3>Files</h3>
+    <ul>
+        {% for path, file in files %}
+            <li>
+                <a href="{% url code_browser slug=repo.slug path=path %}">
+                    {{ file }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

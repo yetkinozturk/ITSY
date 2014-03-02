@@ -15,7 +15,11 @@ ITSY is an issue tracking system built in Django
 - django-haystack==2.1.0
 - haystack==0.15
 - pyelasticsearch==0.6.1
-
+- pyvcs==0.2.0
+- Pygments==1.6
+- dulwich==0.9.5 (Git support)
+- mercurial==2.9 (Mercurial support)
+- pysvn          (Subversion support)
 - elasticsearch
 
 ### Instructions

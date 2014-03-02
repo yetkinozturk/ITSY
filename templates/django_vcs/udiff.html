@@ -1,0 +1,63 @@
+<div id="paste">
+    <div class="diff-table">
+        {% if info %}
+             <div class="diffinfo">
+                {% for k, v in info %}
+                    {% if k %}
+                        <b>{{ k }}:</b>
+                    {% endif %}
+                    {{ v|linebreaksbr }}
+                    {% if not forloop.last %}<br />{% endif %}
+                {% endfor %}
+             </div>
+        {% endif %}
+        {% for diff in diffs %}
+            <div class="diff">
+                {% if diff.is_header %}
+                    <pre class="header">
+                        {{ diff.lines|join:"\n" }}
+                    </pre>
+                {% else %}
+                    <div class="meta">
+                        <div class="old">
+                            <span class="filename">
+                                {{ diff.old_filename }}
+                            </span>
+                            {% if diff.old_revision %}
+                                <span class="revision">
+                                    [{{ diff.old_revision }}]
+                                </span>
+                            {% endif %}
+                        </div>
+                        <div class="new">
+                            <span class="filename">
+                                {{ diff.new_filename }}
+                            </span>
+                            {% if diff.new_revision %}
+                                <span class="revision">
+                                    [{{ diff.new_revision }}]
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <table class="diff">
+                        {% for chunk in diff.chunks %}
+                            {% if not forloop.first %}
+                                <tr class="ellipsis">
+                                    <th colspan="3">…</th>
+                                </t>
+                            {% endif %}
+                            {% for line in chunk %}
+                                <tr class="line {{ line.action }}">
+                                    <th class="old_rev">{{ line.old_lineno }}</th>
+                                    <th class="new_rev">{{ line.new_lineno }}</th>
+                                    <td class="code">{{ line.line|safe }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

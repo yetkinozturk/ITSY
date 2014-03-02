@@ -1,0 +1,20 @@
+{% extends "django_vcs/base.html" %}
+
+{% load highlight %}
+
+{% block title %}
+    {{ path }} in {{ repo.name }}
+{% endblock %}
+
+{% block extra_head %}
+    <style type="text/css">
+        {% highlight_css %}
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Contents of {{ path }}
+    </h1>
+    {{ file|highlight:path }}
+{% endblock %}
