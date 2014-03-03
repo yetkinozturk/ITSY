@@ -198,8 +198,8 @@ class Issue(models.Model):
     effort = models.CharField(_(u'Effort'),max_length=128, null=True, blank=True)
     effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True)
     project_version = models.ForeignKey(ProjectVersion,verbose_name=_(u'Project Version'))
-    reporter = models.ForeignKey(Account, verbose_name=_(u'Reporter'), null=True, blank=True,editable=False)
-
+    assignee = models.ForeignKey(Account, verbose_name=_(u'Assignee'), null=True, blank=True)
+    reporter = models.PositiveIntegerField(_(u'Reporter'),editable=False,null=True,blank=True)
     type = models.ForeignKey(IssueType, verbose_name=_(u'Type'), null=True, blank=True)
     status = models.ForeignKey(IssueStatus,verbose_name=_(u'Status'), null=True, blank=True)
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
