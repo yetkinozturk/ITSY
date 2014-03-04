@@ -131,7 +131,7 @@ class CreateIssueDetailsForm(forms.ModelForm):
             for k,v in self.original_fields.iteritems():
                 self.cleaned_data.pop(k)
         for k,v in self.cleaned_data.iteritems():
-            if self.field_value_class:
+            if k in self.field_value_class:
                 item,created = self.field_value_class[k].objects.get_or_create(
                     issue=m,
                     field=self.field_type_instance.get(k))
@@ -155,14 +155,16 @@ class CreateIssueDetails(LoginRequiredUpdateView):
 
     def get_object(self):
         issue = get_object_or_404(Issue, slug=self.slug)
-        issue.reporter = self.request.user.id
-        issue.save()
+        # issue.reporter = self.request.user.id
+        # issue.save()
         return issue
 
 
 class CreateIssueView(LoginRequiredCreateView):
 
     def get_success_url(self):
+        self.object.reporter = self.request.user.id
+        self.object.save()
         return '/issue/create/details/%s/' % self.object.slug
 
 
