@@ -224,6 +224,9 @@ class Issue(models.Model):
         else:
             return False
 
+    def get_edit_link(self):
+        return '<a href="/issue/create/details/%s/"><b>%s</b></a>' % (self.slug,self.title)
+
 
 class IssueWatch(models.Model):
     issue = models.ForeignKey(Issue, verbose_name=_(u'Issue'))

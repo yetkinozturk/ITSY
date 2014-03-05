@@ -1,4 +1,8 @@
 {% extends 'common/base.html' %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="issue.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
 
 {% block leftnav %}
     {% include 'issue/leftnavigation.html' %}

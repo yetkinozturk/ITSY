@@ -2,12 +2,14 @@
 <html>
 
 <head>
+    {% block head %}
     {% include 'common/styles.html' %}
     {% if page_title %}
         <title>{{ page_title }}</title>
     {% else %}
         <title>ITSY</title>
     {% endif %}
+    {% endblock %}
 </head>
 <body>
 

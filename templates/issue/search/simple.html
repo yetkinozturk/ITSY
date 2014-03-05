@@ -1,8 +1,19 @@
 {% extends 'issue/issuebase.html' %}
 {% block content %}
+    <div class="found-issue-list">
     {% if issue_list %}
-        {{ issue_list }}
+        <h4>{{ issue_list.count }} &nbsp;Issue(s) Found</h4>
+        {% for issue in issue_list %}
+            <div class="found-issues">
+                {% autoescape off %}
+                {{ issue.object.get_edit_link }}&nbsp;(<b>{{ issue.object.project_version }}</b>)<br>
+                {% endautoescape %}
+                {{ issue.object.summary }}<br>
+            <hr>
+            </div>
+        {% endfor %}
     {% else %}
         <h4>No Issue Found</h4>
     {% endif %}
+    </div>
 {% endblock %}
