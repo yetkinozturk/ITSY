@@ -1,0 +1,1 @@
+Because it's not maintained anymore taken from  https://github.com/alex/pyvcs
