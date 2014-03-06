@@ -1,7 +1,8 @@
+import os
 from itertools import count
 
 from django.db import models
-
+from django.core.exceptions import ValidationError
 from pyvcs.backends import AVAILABLE_BACKENDS, get_backend
 from pyvcs.exceptions import CommitDoesNotExist, FileDoesNotExist, FolderDoesNotExist
 
@@ -21,6 +22,28 @@ class CodeRepository(models.Model):
 
     def __unicode__(self):
         return "%s: %s" % (self.get_repository_type_display(), self.name)
+
+    def clean(self,*args, **kwargs):
+        super(CodeRepository, self).clean(*args, **kwargs)
+
+        if not os.path.isdir(self.location):
+            raise ValidationError('Location is not a valid directory')
+
+        if self.repository_type == 1:
+            from dulwich.repo import Repo,NotGitRepository
+            try:
+                Repo(self.location)
+            except NotGitRepository:
+                raise ValidationError('Location is not a valid git repository')
+
+        elif self.repository_type == 3:
+            from mercurial import ui
+            from mercurial.localrepo import localrepository as hg_repo
+            from mercurial.error import RepoError
+            try:
+                hg_repo(ui.ui(),path=self.location)
+            except RepoError:
+                raise ValidationError('Location is not a valid mercurial repository')
 
     @models.permalink
     def get_absolute_url(self):
