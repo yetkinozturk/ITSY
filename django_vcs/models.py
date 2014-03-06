@@ -5,13 +5,14 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from pyvcs.backends import AVAILABLE_BACKENDS, get_backend
 from pyvcs.exceptions import CommitDoesNotExist, FileDoesNotExist, FolderDoesNotExist
-
+from autoslug import AutoSlugField
 
 REPOSITORY_TYPES = zip(count(), AVAILABLE_BACKENDS.keys())
 
+
 class CodeRepository(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = AutoSlugField(populate_from='name')
 
     repository_type = models.IntegerField(choices=REPOSITORY_TYPES)
 

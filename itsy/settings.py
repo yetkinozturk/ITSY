@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'project',
     'django_vcs',
     'django_vcs.templatetags',
+    'repos',
 )
 
 AUTH_USER_MODEL = 'account.Account'

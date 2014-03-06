@@ -1,0 +1,13 @@
+{% extends 'repos/repobase.html' %}
+{% block content %}
+    <div style="margin-left: 240px;">
+    <h4>{{ page_heading }}</h4>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+    </div>
+{% endblock content %}
