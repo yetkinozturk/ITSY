@@ -12,7 +12,7 @@
     <ul>
         {% for path, folder in folders %}
             <li>
-                <a href="{% url code_browser slug=repo.slug path=path %}/">
+                <a href="{% url 'code_browser' slug=repo.slug path=path %}/">
                     {{ folder }}
                 </a>
             </li>
@@ -22,7 +22,7 @@
     <ul>
         {% for path, file in files %}
             <li>
-                <a href="{% url code_browser slug=repo.slug path=path %}">
+                <a href="{% url 'code_browser' slug=repo.slug path=path %}">
                     {{ file }}
                 </a>
             </li>

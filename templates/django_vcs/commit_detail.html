@@ -22,7 +22,7 @@
             <ul>
                 {% for file in commit.files %}
                     <li>
-                        <a href="{% url code_browser slug=repo.slug path=file %}?rev={{ commit.commit_id }}">
+                        <a href="{% url 'code_browser' slug=repo.slug path=file %}?rev={{ commit.commit_id }}">
                             {{ file }}
                         <a/>
                     </li>

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'issue',
     'project',
     'django_vcs',
+    'django_vcs.templatetags',
 )
 
 AUTH_USER_MODEL = 'account.Account'
