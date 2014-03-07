@@ -1,0 +1,4 @@
+Because it's not maintained anymore, base taken from  https://github.com/alex/django-vcs
+Views rewritten in CBVs
+Deprecated Django components rewritten.
+Templates refactored.
