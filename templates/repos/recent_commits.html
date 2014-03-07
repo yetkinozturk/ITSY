@@ -1,0 +1,31 @@
+{% extends "repos/base.html" %}
+
+{% block title %}
+    Recent commits for {{ repo.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Recent commits for {{ repo.name }}
+    </h1>
+    <table>
+        {% for commit in commits %}
+            <tr>
+                <td>
+                    <a href="{% url 'repos:commit_detail' slug=repo.slug commit_id=commit.commit_id %}">
+                        {{ commit.commit_id }}
+                    </a>
+                </td>
+                <td>
+                    {{ commit.author }}
+                </td>
+                <td>
+                    {{ commit.message }}
+                </td>
+                <td>
+                    {{ commit.item }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,146 @@
+<style type="text/css">
+    #paste {
+        margin: 0;
+        padding: 0;
+        border: 1px solid #A7BEC4;
+        font-family: 'Trebuchet MS', sans-serif;
+    }
+
+    #paste div.code {
+        overflow: auto;
+    }
+
+    #paste table, #paste tbody {
+        margin: 0;
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    #paste td.code {
+        padding-left: 10px;
+    }
+
+    #paste td.linenos {
+        background-color: #A7BEC4;
+        padding-right: 5px;
+        padding-left: 20px;
+        text-align: right;
+        color: #FFFFFF,
+    }
+
+    #paste.nolinenos td.linenos {
+        display: none;
+    }
+
+    #paste pre {
+        margin: 0;
+        padding: 5px 0 5px 0;
+        font-family: 'Bitstream Vera Sans Mono', monospace,
+        font-size: 13px;
+    }
+
+    table.diff {
+        width: 100%;
+        border: 2px solid #CCCCCC;
+        border-collapse: collapse;
+        empty-cells: show;
+        margin: 0;
+    }
+
+    table.diff th.old_rev, table.diff th.new_rev {
+        width: 3em;
+    }
+
+    table.diff tr.line th.old_rev, table.diff tr.line th.new_rev {
+        padding: 0.2em 0.5em 0.2em 0;
+        text-align: right;
+        font-weight: normal;
+        font-size: 0.8em;
+        background-color: #EEEEEE;
+        color: #444444;
+        border: 1px solid #CCCCCC;
+        vertical-align: top;
+    }
+
+    table.diff tr.ellipsis th {
+        border: 1px solid #CCCCCC;
+        background-color: #DFDFDF;
+    }
+
+    table.diff tr.line td.code {
+        padding: 0.1em 0.4em 0.1em 0.4em;
+        font-family: monospace;
+        font-size: 13px;
+        border: 1px solid #DDDDDD;
+        white-space: -moz-pre-wrap;
+        white-space: -o-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: pre-wrap;
+    }
+
+    table.diff tr.add td.code {
+        background-color: #DDFFDD;
+    }
+
+    table.diff tr.del td.code {
+        background-color: #FCCFCC;
+    }
+
+    table.diff tr.add td.code ins {
+        background-color: #99EE99;
+        text-decoration: none;
+    }
+
+    table.diff tr.del td.code del {
+        background-color: #E99E99;
+        text-decoration: none;
+    }
+
+    div.diff-table {
+        background: white;
+    }
+
+    div.diff-table div.diffinfo {
+        background: #CBD8DB;
+        color: #111111;
+        padding: 5px;
+    }
+
+    div.diff-table div.meta {
+        background: #CBD8DB;
+        color: #111111;
+        padding: 5px;
+    }
+
+    div.diff-table div.meta .old {
+        font-size: 12px;
+    }
+
+    div.diff-table div.meta .new {
+        padding-top: 4px;
+    }
+
+    div.diff-table div.meta span.filename {
+    }
+
+    div.diff-table div.meta span.revision  {
+        color: #557F8A;
+        font-size: 0.8em;
+    }
+
+    div.diff-table pre.header {
+        background-color: #557F8A;
+        color: white;
+        padding: 5px 10px!important;
+    }
+
+    div.diff-table table.diff {
+        border: none;
+    }
+
+    div.diff-table table.diff td.code {
+        border-right: none;
+    }
+
+</style>

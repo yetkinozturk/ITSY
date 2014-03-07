@@ -56,7 +56,7 @@ class CodeRepository(models.Model):
                 branch.Branch.open(self.location.rstrip(os.path.sep))
             except errors.NotBranchError:
                 raise ValidationError('Location is not a valid bazaar repository')
-            
+
         elif self.repository_type == 3:
             try:
                 from mercurial import ui
@@ -71,7 +71,7 @@ class CodeRepository(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('recent_commits', (), {'slug': self.slug})
+        return ('repos:recent_commits', (), {'slug': self.slug})
 
     @property
     def repo(self):
