@@ -40,9 +40,8 @@ INSTALLED_APPS = (
     'dashboard',
     'issue',
     'project',
-    'django_vcs',
-    'django_vcs.templatetags',
     'repos',
+    'repos.templatetags',
 )
 
 AUTH_USER_MODEL = 'account.Account'

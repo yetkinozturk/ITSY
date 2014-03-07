@@ -1,0 +1,15 @@
+from django import template
+from django.template.loader import render_to_string
+
+from repos.diff import prepare_udiff
+
+register = template.Library()
+
+@register.filter
+def render_diff(text):
+    diffs, info = prepare_udiff(text)
+    return render_to_string('repos/udiff.html', {'diffs': diffs, 'info': info})
+
+@register.inclusion_tag('repos/diff_css.html')
+def diff_css():
+    return {}

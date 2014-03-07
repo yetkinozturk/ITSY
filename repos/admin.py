@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from repos.models import CodeRepository
+
+
+admin.site.register(CodeRepository)

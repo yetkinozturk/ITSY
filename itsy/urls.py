@@ -11,6 +11,5 @@ urlpatterns = patterns('',
     url(r'^account/', include('account.routes',namespace='account')),
     url(r'^repos/', include('repos.routes',namespace='repos')),
     url(r'^search/', include('haystack.urls')),
-    url(r'^vcs/', include('django_vcs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
