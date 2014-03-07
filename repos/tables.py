@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from django_vcs.models import CodeRepository
+from repos.models import CodeRepository
 
 
 class RepoTable(tables.Table):

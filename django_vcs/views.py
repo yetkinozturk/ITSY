@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 
-from django_vcs.models import CodeRepository
+from repos.models import CodeRepository
 
 def repo_list(request):
     repos = CodeRepository.objects.all()

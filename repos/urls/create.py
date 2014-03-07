@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from django_vcs.models import CodeRepository
+from repos.models import CodeRepository
 from repos.views import CreateRepoView
 
 urlpatterns = patterns('',

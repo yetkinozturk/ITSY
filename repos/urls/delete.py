@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from repos.views import DeleteRepoItem
-from django_vcs.models import CodeRepository
+from repos.models import CodeRepository
 
 urlpatterns = patterns('',
 

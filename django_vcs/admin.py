@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from django_vcs.models import CodeRepository
+from repos.models import CodeRepository
 
 class CodeRepositoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {
