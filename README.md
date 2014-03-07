@@ -19,6 +19,7 @@ ITSY is an issue tracking system built in Django
 - dulwich==0.9.5 (Git support, Optional)
 - mercurial==2.9 (Mercurial support, Optional)
 - pysvn          (Subversion support, Optional)
+- bzr            (Bazaar support, Optional)
 - elasticsearch
 
 ### Instructions
@@ -29,5 +30,5 @@ ITSY is an issue tracking system built in Django
 - Create charfields, textfields, etc...
 - Put fields you created to a issue template
 - Create an Issue using the template for your project/version
-
+- Add Code Repositories to your project and browse them.
 

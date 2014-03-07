@@ -30,7 +30,14 @@ class CodeRepository(models.Model):
         if not os.path.isdir(self.location):
             raise ValidationError('Location is not a valid directory')
 
-        if self.repository_type == 1:
+        #svn=0 git=1 bzr=2 hg=3
+        if self.repository_type == 0:
+            try:
+                import pysvn
+            except ImportError:
+                ValidationError('You must install pysvn to use svn repos')
+
+        elif self.repository_type == 1:
             try:
                 from dulwich.repo import Repo,NotGitRepository
             except ImportError:
@@ -40,6 +47,16 @@ class CodeRepository(models.Model):
             except NotGitRepository:
                 raise ValidationError('Location is not a valid git repository')
 
+        elif self.repository_type == 2:
+            try:
+                from bzrlib import branch, diff, errors
+            except ImportError:
+                raise ValidationError('You must install bzrlib to use bazaar repos')
+            try:
+                branch.Branch.open(self.location.rstrip(os.path.sep))
+            except errors.NotBranchError:
+                raise ValidationError('Location is not a valid bazaar repository')
+            
         elif self.repository_type == 3:
             try:
                 from mercurial import ui
