@@ -10,7 +10,6 @@ from common.fields import ListField
 from project.models import ProjectVersion, Project
 
 
-
 class IssueType(models.Model):
     name = models.CharField(_(u'Type Name'), max_length=128,unique=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)

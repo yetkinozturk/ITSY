@@ -1,0 +1,12 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <div style="margin-left: 240px;">
+        <form id="create-issue-form" action="/config/" method="post">{% csrf_token %}
+          <h4>{{ page_heading }}</h4>
+            {{ form.as_p }}
+          <div class="modal-footer" style="text-align: left">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+    </div>
+{% endblock content %}

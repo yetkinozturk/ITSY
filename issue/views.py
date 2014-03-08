@@ -155,8 +155,6 @@ class CreateIssueDetails(LoginRequiredUpdateView):
 
     def get_object(self):
         issue = get_object_or_404(Issue, slug=self.slug)
-        # issue.reporter = self.request.user.id
-        # issue.save()
         return issue
 
 

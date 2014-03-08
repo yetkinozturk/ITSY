@@ -18,7 +18,6 @@
                 </td>
                 <td>{{ repo.get_repository_type_display }}</td>
                 {% with repo.get_recent_commits.0 as commit %}
-                    {{ commit }}
                     <td>{{ commit.time }}</td>
                     <td>{{ commit.message }}</td>
                 {% endwith %}
