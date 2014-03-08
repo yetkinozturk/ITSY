@@ -222,7 +222,7 @@ class ListIssueFieldView(LoginRequiredListView):
         context['page_title'] = self.page_title
         context['page_heading'] = self.page_heading
         tb = self.table(self.model.objects.all())
-        RequestConfig(self.request).configure(tb)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(tb)
         context['object_list'] = tb
         return context
 
@@ -235,7 +235,7 @@ class ListIssueView(LoginRequiredListView):
     def get_context_data(self, **kwargs):
         context = super(ListIssueView, self).get_context_data(**kwargs)
         tb = self.table(self.model.objects.all())
-        RequestConfig(self.request).configure(tb)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(tb)
         context['object_list'] = tb
         return context
 

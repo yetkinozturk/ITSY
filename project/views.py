@@ -15,7 +15,7 @@ class ListProjectView(LoginRequiredListView):
     def get_context_data(self, **kwargs):
         context = super(ListProjectView, self).get_context_data(**kwargs)
         tb = self.table(self.model.objects.all())
-        RequestConfig(self.request).configure(tb)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(tb)
         context['page_title'] = self.page_title
         context['page_heading'] = self.page_heading
         context['object_list'] = tb
