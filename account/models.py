@@ -38,7 +38,6 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     ACCOUNT_TYPES = (
-        ('SA', 'Super Admin'),
         ('AD', 'Admin'),
         ('US', 'User'),
     )
@@ -79,6 +78,10 @@ class Account(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    def save(self, *args, **kwargs):
+        if self.is_admin:
+            self.type = 'AD'
+        super(Account, self).save(*args, **kwargs)
 
 class Filter(models.Model):
     name = models.CharField(_(u'Filter Name'), max_length=128)

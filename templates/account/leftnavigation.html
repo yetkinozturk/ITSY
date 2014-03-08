@@ -1,0 +1,13 @@
+<nav>
+  <div style="width: 200px; float: left;">
+  <ul>
+      <li><a href="{% url 'account:view:item' %}">View Accounts</a></li>
+      <li><a href="{% url 'account:view:role' %}">View Account Roles</a></li>
+      <li><a href="{% url 'account:view:team' %}">View Account Teams</a></li>
+      <li class="divider"></li>
+      <li><a href="{% url 'account:create:item' %}">Create Account</a></li>
+      <li><a href="{% url 'account:create:role' %}">Create Account Role</a></li>
+      <li><a href="{% url 'account:create:team' %}">Create Account Team</a></li>
+  </ul>
+  </div>
+</nav>
