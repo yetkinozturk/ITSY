@@ -36,6 +36,7 @@ ITSY is an issue tracking system built in Django
 ### To Do
 - Advanced Search
 - More Authorization
+- Issue Flows
 - Dashboards
 - Reports, Code Metrics
 - Boards
