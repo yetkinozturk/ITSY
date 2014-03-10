@@ -20,6 +20,7 @@ class MainConfiguration(models.Model):
     email_host_user = models.CharField(_(u'EMAIL_HOST_USER'),max_length=255)
     email_host_password = models.CharField(_(u'EMAIL_HOST_PASSWORD'),max_length=255)
     email_port = models.PositiveSmallIntegerField(_(u'EMAIL_PORT'),default=587)
+    email_fail_silently = models.BooleanField(_(u'EMAIL_FAIL_SILENTLY'), default=False)
 
     ## Account Registration/Activation
     allow_registration = models.BooleanField(_(u'Allow Registration'),default=True,help_text=_(u'If disabled, Accounts need to be created internally'))
