@@ -3,8 +3,8 @@ from project import models as project_models
 
 
 class MilestoneStatusTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/project/edit/milestatus/{{record.id}}/" style="color:red">Edit</a>')
-    delete_entries = tables.TemplateColumn('<a href="/project/delete/milestatus/{{record.id}}/" style="color:red">Delete</a>')
+    edit_entries = tables.TemplateColumn('<a href="/project/edit/milestatus/{{record.id}}/" style="color:red">Edit</a>',sortable=False)
+    delete_entries = tables.TemplateColumn('<a href="/project/delete/milestatus/{{record.id}}/" style="color:red">Delete</a>',sortable=False)
 
     class Meta:
         model = project_models.MilestoneStatus
@@ -13,8 +13,8 @@ class MilestoneStatusTable(tables.Table):
 
 
 class MilestoneTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/project/edit/milestone/{{record.id}}/" style="color:red">Edit</a>')
-    delete_entries = tables.TemplateColumn('<a href="/project/delete/milestone/{{record.id}}/" style="color:red">Delete</a>')
+    edit_entries = tables.TemplateColumn('<a href="/project/edit/milestone/{{record.id}}/" style="color:red">Edit</a>',sortable=False)
+    delete_entries = tables.TemplateColumn('<a href="/project/delete/milestone/{{record.id}}/" style="color:red">Delete</a>',sortable=False)
 
     class Meta:
         model = project_models.Milestone
@@ -23,8 +23,8 @@ class MilestoneTable(tables.Table):
 
 
 class ProjectCategoryTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/project/edit/category/{{record.id}}/" style="color:red">Edit</a>')
-    delete_entries = tables.TemplateColumn('<a href="/project/delete/category/{{record.id}}/" style="color:red">Delete</a>')
+    edit_entries = tables.TemplateColumn('<a href="/project/edit/category/{{record.id}}/" style="color:red">Edit</a>',sortable=False)
+    delete_entries = tables.TemplateColumn('<a href="/project/delete/category/{{record.id}}/" style="color:red">Delete</a>',sortable=False)
 
     class Meta:
         model = project_models.ProjectCategory
@@ -33,8 +33,8 @@ class ProjectCategoryTable(tables.Table):
 
 
 class ProjectTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/project/edit/project/{{record.id}}/" style="color:red">Edit</a>')
-    delete_entries = tables.TemplateColumn('<a href="/project/delete/project/{{record.id}}/" style="color:red">Delete</a>')
+    edit_entries = tables.TemplateColumn('<a href="/project/edit/project/{{record.id}}/" style="color:red">Edit</a>',sortable=False)
+    delete_entries = tables.TemplateColumn('<a href="/project/delete/project/{{record.id}}/" style="color:red">Delete</a>',sortable=False)
 
     class Meta:
         model = project_models.Project
@@ -43,8 +43,8 @@ class ProjectTable(tables.Table):
 
 
 class ProjectVersionTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/project/edit/version/{{record.id}}/" style="color:red">Edit</a>')
-    delete_entries = tables.TemplateColumn('<a href="/project/delete/version/{{record.id}}/" style="color:red">Delete</a>')
+    edit_entries = tables.TemplateColumn('<a href="/project/edit/version/{{record.id}}/" style="color:red">Edit</a>',sortable=False)
+    delete_entries = tables.TemplateColumn('<a href="/project/delete/version/{{record.id}}/" style="color:red">Delete</a>',sortable=False)
 
     class Meta:
         model = project_models.ProjectVersion

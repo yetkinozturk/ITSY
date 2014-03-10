@@ -10,3 +10,4 @@ pyelasticsearch==0.6.1
 Pygments==1.6
 dulwich==0.9.5
 
+dictdiffer==0.0.4

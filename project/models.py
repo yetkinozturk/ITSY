@@ -19,7 +19,7 @@ class Milestone(models.Model):
     title = models.CharField(_(u'Title'), max_length=255, db_index=True)
     slug = AutoSlugField(populate_from='title', unique=True)
     effort = models.CharField(_(u'Effort'),max_length=128, null=True, blank=True)
-    effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True)
+    effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True,editable=False)
     bug_to_fixed = models.PositiveIntegerField(_(u'Bugs to Fixed'), null=True, blank=True)
     bug_fixed = models.PositiveIntegerField(_(u'Bugs Fixed'), null=True, blank=True)
     feature_to_develop = models.PositiveIntegerField(_(u'Feature to Develop'), null=True, blank=True)

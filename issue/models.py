@@ -192,10 +192,10 @@ class IssueTemplate(models.Model):
 
 class Issue(models.Model):
     title = models.CharField(_(u'Title'), max_length=255,unique=True, db_index=True)
-    slug = AutoSlugField(populate_from='title', unique=True)
+    slug = AutoSlugField(populate_from='title', unique=True,editable=False)
     summary = models.TextField(_(u'Summary'), null=True, blank=True)
     effort = models.CharField(_(u'Effort'),max_length=128, null=True, blank=True)
-    effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True)
+    effort_calc = models.PositiveIntegerField(_(u'Effort Calculated'), null=True, blank=True,editable=False)
     project_version = models.ForeignKey(ProjectVersion,verbose_name=_(u'Project Version'))
     assignee = models.ForeignKey(Account, verbose_name=_(u'Assignee'), null=True, blank=True)
     reporter = models.PositiveIntegerField(_(u'Reporter'),editable=False,null=True,blank=True)
@@ -205,7 +205,7 @@ class Issue(models.Model):
     tags = TaggableManager(blank=True)
     template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'),help_text=_(u'Provide a template even it is empty'))
     sub_issues = models.ManyToManyField('self', symmetrical=False,null=True, blank=True)
-
+    changelog = models.TextField(editable=False, null=True, blank=True)
     is_draft = models.BooleanField(_(u'Draft'), default=True)
     resolved = models.BooleanField(_(u'Resolved'), default=False)
     closed = models.BooleanField(_(u'Closed'), default=False)

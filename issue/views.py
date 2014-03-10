@@ -29,7 +29,6 @@ class CreateIssueDetailsForm(forms.ModelForm):
         issue = kwargs.get('instance', None)
 
         if issue:
-            self.fields.pop('effort_calc')
             self.fields.pop('template')
             self.original_fields = self.fields.copy()
 
