@@ -3,6 +3,8 @@ from django import forms
 from haystack.forms import SearchForm
 from haystack.query import SearchQuerySet
 from django_tables2 import RequestConfig
+import autocomplete_light
+autocomplete_light.autodiscover()
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
                           IssueBoolValue, IssueChoiceValue)

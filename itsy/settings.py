@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'taggit',
     'braces',
     'haystack',
+    'autocomplete_light',
     'account',
     'common',
     'common.templatetags',

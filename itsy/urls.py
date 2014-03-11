@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'^repos/', include('repos.routes',namespace='repos')),
     url(r'^search/', include('haystack.urls')),
     url(r'^config/',include('common.urls')),
+    url(r'^autocomplete/', include('autocomplete_light.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

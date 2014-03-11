@@ -78,6 +78,10 @@ class Account(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    @property
+    def is_superuser(self): # For auth user compatibility
+        return self.is_admin
+
     def save(self, *args, **kwargs):
         if self.is_admin:
             self.type = 'AD'

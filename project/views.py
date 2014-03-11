@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404
 from django_tables2   import RequestConfig
+from django.forms import ModelForm
+import autocomplete_light
 from common.views import (LoginRequiredListView,LoginRequiredCreateView,
-                          LoginRequiredDeleteView,LoginRequiredUpdateView,
-                          LoginRequiredTemplateView)
+                          LoginRequiredDeleteView,LoginRequiredUpdateView)
+from project.models import Project
 
 
 class ListProjectView(LoginRequiredListView):
@@ -33,6 +35,8 @@ class CreateProjectView(LoginRequiredCreateView):
         context['page_heading'] = self.page_heading
         return context
 
+    def get_form_class(self,**kwargs):
+        return autocomplete_light.modelform_factory(self.model)
 
 class DeleteProjectItem(LoginRequiredDeleteView):
     obj_id = -1
@@ -71,6 +75,9 @@ class UpdateProjectItem(LoginRequiredUpdateView):
         context['page_heading'] = self.page_heading
         context['post_fix'] = self.post_fix
         return context
+
+    def get_form_class(self,**kwargs):
+        return autocomplete_light.modelform_factory(self.model)
 
     def get(self, request, *args, **kwargs):
         self.obj_id = kwargs.get('id')

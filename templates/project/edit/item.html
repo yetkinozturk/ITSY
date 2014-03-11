@@ -1,7 +1,7 @@
 {% extends 'project/projectbase.html' %}
 {% block content %}
     <div style="margin-left: 240px;">
-        <form id="create-issue-form" action="/issue/edit/{{ post_fix }}/{{object.id}}/" method="post">{% csrf_token %}
+        <form id="create-issue-form" action="/project/edit/{{ post_fix }}/{{object.id}}/" method="post">{% csrf_token %}
           <h3>{{ page_heading }}</h3>
             {{ form.as_p }}
           <div class="modal-footer" style="text-align: left">
