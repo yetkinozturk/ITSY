@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from django import forms
-from haystack.forms import SearchForm
 from haystack.query import SearchQuerySet
 from django_tables2 import RequestConfig
 import autocomplete_light
@@ -14,7 +13,7 @@ from common.views import (LoginRequiredListView,LoginRequiredCreateView,
                           LoginRequiredTemplateView)
 
 
-class CreateIssueDetailsForm(forms.ModelForm):
+class CreateIssueDetailsForm(autocomplete_light.ModelForm):
     """
     This form is displayed in the second step of issue create.
     init method is overriden to add fields from the selected issue template
@@ -166,6 +165,8 @@ class CreateIssueView(LoginRequiredCreateView):
         self.object.save()
         return '/issue/create/details/%s/' % self.object.slug
 
+    def get_form_class(self,**kwargs):
+        return autocomplete_light.modelform_factory(self.model)
 
 class CreateIssueFlow(LoginRequiredCreateView):
     pass
@@ -181,6 +182,9 @@ class CreateIssueField(LoginRequiredCreateView):
         context['page_title'] = self.page_title
         context['page_heading'] = self.page_heading
         return context
+
+    def get_form_class(self,**kwargs):
+        return autocomplete_light.modelform_factory(self.model)
 
 
 class UpdateIssueField(LoginRequiredUpdateView):

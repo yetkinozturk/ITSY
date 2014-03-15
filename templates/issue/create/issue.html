@@ -2,8 +2,16 @@
 {% block content %}
         <div style="margin-left: 240px;">
             <form id="create-issue-form" action="{% url 'issue:create:item' %}" method="post">{% csrf_token %}
-              <h3>Create An Issue</h3>
-        {{ form.as_p }}
+              <h3>Create An Issue : Step 1</h3>
+        <table>
+        {% for field in form %}
+            <tr class="spaceUnder">
+                <td class="labeltd">{{ field.label_tag }}</td>
+                <td>{{ field }}</td>
+                <td>{% if field.errors %}<div class="fieldWrapper" style="background-color: paleturquoise;">{{ field.errors }}</div>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </table>
               <div class="modal-footer" style="text-align: left">
                 <button type="submit" class="btn btn-primary">Next</button>
               </div>

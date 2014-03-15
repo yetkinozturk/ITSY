@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from django_tables2   import RequestConfig
-from django.forms import ModelForm
 import autocomplete_light
 from common.views import (LoginRequiredListView,LoginRequiredCreateView,
                           LoginRequiredDeleteView,LoginRequiredUpdateView)
