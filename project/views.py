@@ -3,7 +3,6 @@ from django_tables2   import RequestConfig
 import autocomplete_light
 from common.views import (LoginRequiredListView,LoginRequiredCreateView,
                           LoginRequiredDeleteView,LoginRequiredUpdateView)
-from project.models import Project
 
 
 class ListProjectView(LoginRequiredListView):

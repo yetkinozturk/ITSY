@@ -4,7 +4,15 @@
     <h4>{{ page_heading }}</h4>
     <form method="post" action="">
         {% csrf_token %}
-        {{ form.as_p }}
+        <table>
+        {% for field in form %}
+            <tr class="spaceUnder">
+                <td class="labeltd">{{ field.label_tag }}</td>
+                <td>{{ field }}</td>
+                <td>{% if field.errors %}<div class="fieldWrapper" style="background-color: paleturquoise;">{{ field.errors }}</div>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </table>
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
