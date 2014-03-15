@@ -1,5 +1,9 @@
 {% extends 'common/base.html' %}
-
+{% load static %}
+{% block head %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
 {% block leftnav %}
     {% include 'project/leftnavigation.html' %}
 {% endblock %}

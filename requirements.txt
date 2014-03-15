@@ -9,6 +9,6 @@ haystack==0.15
 pyelasticsearch==0.6.1
 Pygments==1.6
 dulwich==0.9.5
-
 dictdiffer==0.0.4
 django-autocomplete-light==2.0.0a15
+-e git://github.com/shaunsephton/django-ckeditor.git#egg=django-ckeditor

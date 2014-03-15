@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'braces',
     'haystack',
     'autocomplete_light',
+    'ckeditor',
     'account',
     'common',
     'common.templatetags',
@@ -73,6 +74,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = BASE_DIR + STATIC_URL
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates').replace('\\','/'),
 )
@@ -82,6 +85,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
 )
+
+CKEDITOR_UPLOAD_PATH = BASE_DIR + "/uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Advanced',
+    },
+}
 
 HAYSTACK_CONNECTIONS = {
     'default': {

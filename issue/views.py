@@ -4,6 +4,7 @@ from haystack.query import SearchQuerySet
 from django_tables2 import RequestConfig
 import autocomplete_light
 autocomplete_light.autodiscover()
+from ckeditor.widgets import CKEditorWidget
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
                           IssueBoolValue, IssueChoiceValue)
@@ -11,6 +12,18 @@ from account.models import Account
 from common.views import (LoginRequiredListView,LoginRequiredCreateView,
                           LoginRequiredDeleteView,LoginRequiredUpdateView,
                           LoginRequiredTemplateView)
+
+
+class CreateIssueInitForm(autocomplete_light.ModelForm):
+    """
+    This form is displayed in the first step of issue create.
+    """
+    class Meta:
+        model = Issue
+
+    def __init__(self, *args, **kwargs):
+        super(CreateIssueInitForm, self).__init__(*args, **kwargs)
+        self.fields['summary'].widget = CKEditorWidget()
 
 
 class CreateIssueDetailsForm(autocomplete_light.ModelForm):
@@ -32,6 +45,7 @@ class CreateIssueDetailsForm(autocomplete_light.ModelForm):
         if issue:
             self.fields.pop('template')
             self.original_fields = self.fields.copy()
+            self.fields['summary'].widget = CKEditorWidget()
 
             if issue.template:
 
@@ -48,7 +62,7 @@ class CreateIssueDetailsForm(autocomplete_light.ModelForm):
 
                 text_fields = issue.template.text_fields.all()
                 for field in text_fields:
-                    self.fields[field.name] = forms.CharField(widget=forms.Textarea, required=field.required)
+                    self.fields[field.name] = forms.CharField(widget=CKEditorWidget(), required=field.required)
                     self.field_value_class[field.name] = IssueTextValue
                     self.field_type_instance[field.name] = field
                     try:
@@ -159,14 +173,15 @@ class CreateIssueDetails(LoginRequiredUpdateView):
 
 
 class CreateIssueView(LoginRequiredCreateView):
+    form_class = CreateIssueInitForm
 
     def get_success_url(self):
         self.object.reporter = self.request.user.id
         self.object.save()
         return '/issue/create/details/%s/' % self.object.slug
 
-    def get_form_class(self,**kwargs):
-        return autocomplete_light.modelform_factory(self.model)
+    # def get_form_class(self,**kwargs):
+    #     return autocomplete_light.modelform_factory(self.model)
 
 class CreateIssueFlow(LoginRequiredCreateView):
     pass

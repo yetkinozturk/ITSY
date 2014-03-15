@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django_tables2   import RequestConfig
 import autocomplete_light
+from ckeditor.widgets import CKEditorWidget
 from common.views import (LoginRequiredListView,LoginRequiredCreateView,
                           LoginRequiredDeleteView,LoginRequiredUpdateView)
 
@@ -33,8 +34,12 @@ class CreateProjectView(LoginRequiredCreateView):
         context['page_heading'] = self.page_heading
         return context
 
-    def get_form_class(self,**kwargs):
-        return autocomplete_light.modelform_factory(self.model)
+    def get_form_class(self,*args,**kwargs):
+        form = autocomplete_light.modelform_factory(self.model)
+        #raise Exception(dir(form))
+        if 'summary' in form.base_fields:
+            form.base_fields['summary'].widget = CKEditorWidget()
+        return form
 
 class DeleteProjectItem(LoginRequiredDeleteView):
     obj_id = -1
