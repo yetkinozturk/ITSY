@@ -14,6 +14,7 @@ ITSY is an issue tracking system built in Django
 - django-braces==1.3.1
 - django-haystack==2.1.0
 - haystack==0.15
+- Pillow==2.3.1
 - pyelasticsearch==0.6.1
 - dictdiffer==0.0.4
 - django-autocomplete-light==2.0.0a15
