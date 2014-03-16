@@ -2,8 +2,8 @@
 {% load bootstrap_toolkit %}
 {% load render_table from django_tables2 %}
 {% block content %}
-    <h4>{{ page_heading }}</h4>
     <div style="margin-left: 240px;">
+        <h4>{{ page_heading }}</h4>
         {% render_table object_list %}
     </div>
 {% endblock %}

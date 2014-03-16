@@ -2,7 +2,7 @@
 {% block content %}
         <div style="margin-left: 240px;">
             <form id="create-issue-form" action="{% url 'issue:create:item' %}" method="post">{% csrf_token %}
-              <h3>Create An Issue : Step 1</h3>
+              <h4>Create An Issue:</h4>
         <table>
         {% for field in form %}
             <tr class="spaceUnder">
