@@ -1,17 +1,18 @@
 {% extends 'issue/issuebase.html' %}
 {% block content %}
-    <div class="found-issue-list">
+    <div class="found-issue-list" style="padding-left: 20%;">
     {% if issue_list %}
         <h4>{{ issue_list.count }} &nbsp;Issue(s) Found</h4>
+        <table>
         {% for issue in issue_list %}
-            <div class="found-issues">
                 {% autoescape off %}
-                {{ issue.object.get_edit_link }}&nbsp;(<b>{{ issue.object.project_version }}</b>)<br>
+                <tr><td>{{ issue.object.get_edit_link }}&nbsp;(<b>{{ issue.object.project_version }}</b>)</td></tr>
+                <tr><td>{{ issue.object.summary }}</td></tr>
                 {% endautoescape %}
-                {{ issue.object.summary }}<br>
             <hr>
-            </div>
+
         {% endfor %}
+        </table>
     {% else %}
         <h4>No Issue Found</h4>
     {% endif %}

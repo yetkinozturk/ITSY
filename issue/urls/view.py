@@ -3,7 +3,8 @@ from issue.models import (IssueType, IssueStatus, IssuePriority,IssueCharField,
                           IssueTextField, IssueImageField,IssueFileField,
                           IssuePerson, IssueFlow, IssueTemplate, Issue,
                           IssueBooleanField, IssueDatetimeField, IssueChoiceField)
-from issue.views import (ListIssueFieldView, ListIssueView)
+from issue.views import (ListIssueFieldView, ListIssueView,
+                         ReadOnlyIssueDetailsView)
 from issue import tables as issue_tables
 
 
@@ -137,6 +138,14 @@ urlpatterns = patterns('',
             page_heading='Issue Templates:'
         ),
         name='template'),
+
+    url(r'^details/(?P<slug>\w+)/',
+        ReadOnlyIssueDetailsView.as_view(
+            model=Issue,
+            success_url='/issue/view/item/',
+            template_name = 'issue/view/issuedetails.html'
+        ),
+        name='details'),
 
     url(r'^',
         ListIssueView.as_view(

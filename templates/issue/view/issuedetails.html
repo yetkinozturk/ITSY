@@ -1,7 +1,6 @@
 {% extends 'issue/issuebase.html' %}
 {% block content %}
     <div style="margin-left: 240px;">
-        <form id="create-issue-form" action="{% url 'issue:create:details' issue.slug %}" method="post">{% csrf_token %}
           <h4>{{ issue }} : {{ issue.project_version }}</h4>
         <table>
         {% for field in form %}
@@ -13,8 +12,12 @@
         {% endfor %}
         </table>
           <div class="modal-footer" style="text-align: left">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" id="editButton" class="btn btn-primary">Edit</button>
           </div>
-        </form>
     </div>
+    <script type="text/javascript">
+    $("#editButton").click(function(){
+        window.location.replace("{% url 'issue:create:details' issue.slug %}");
+    })
+    </script>
 {% endblock %}

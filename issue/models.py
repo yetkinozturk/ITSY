@@ -224,7 +224,7 @@ class Issue(models.Model):
             return False
 
     def get_edit_link(self):
-        return '<a href="/issue/create/details/%s/"><b>%s</b></a>' % (self.slug,self.title)
+        return '<a href="/issue/view/details/%s/"><b>%s</b></a>' % (self.slug,self.title)
 
 
 class IssueWatch(models.Model):

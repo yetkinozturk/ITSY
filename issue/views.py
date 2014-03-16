@@ -154,6 +154,19 @@ class CreateIssueDetailsForm(autocomplete_light.ModelForm):
         return m
 
 
+class ReadOnlyIssueDetailsForm(CreateIssueDetailsForm):
+    """
+    This form is read only for displaying issue details.
+    """
+    template_name = 'issue/view/issuedetails.html'
+
+    def __init__(self, *args, **kwargs):
+        super(ReadOnlyIssueDetailsForm, self).__init__(*args, **kwargs)
+        self.fields['summary'].widget = CKEditorWidget()
+        for k,v in self.fields.iteritems():
+            v.widget.attrs['disabled'] = 'true'
+
+
 class CreateIssueDetails(LoginRequiredUpdateView):
     slug = ''
     context_object_name = 'issue'
@@ -170,6 +183,10 @@ class CreateIssueDetails(LoginRequiredUpdateView):
     def get_object(self):
         issue = get_object_or_404(Issue, slug=self.slug)
         return issue
+
+
+class ReadOnlyIssueDetailsView(CreateIssueDetails):
+    form_class = ReadOnlyIssueDetailsForm
 
 
 class CreateIssueView(LoginRequiredCreateView):

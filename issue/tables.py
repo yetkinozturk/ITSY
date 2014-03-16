@@ -133,7 +133,7 @@ class IssueTemplateTable(tables.Table):
 
 
 class IssueTable(tables.Table):
-    edit_entries = tables.TemplateColumn('<a href="/issue/create/details/{{record.slug}}/" style="color:red">Edit</a>',orderable=False)
+    edit_entries = tables.TemplateColumn('<a href="/issue/view/details/{{record.slug}}/" style="color:red">View</a>',orderable=False)
     delete_entries = tables.TemplateColumn('<a href="/issue/delete/item/{{record.id}}/" style="color:red">Delete</a>',orderable=False)
 
     class Meta:
