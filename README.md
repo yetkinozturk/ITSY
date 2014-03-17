@@ -4,6 +4,8 @@ ITSY
 
 ITSY is an issue tracking system built in Django
 
+Online Demo: http://www.itsyproject.com/
+
 ### Requirements
 
 - Django==1.6.2

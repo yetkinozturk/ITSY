@@ -129,7 +129,7 @@ urlpatterns = patterns('',
         ),
         name='template'),
 
-    url(r'^details/(?P<slug>\w+)/',
+    url(r'^details/(?P<slug>[\w-]+)/',
         CreateIssueDetails.as_view(
             model=Issue,
             success_url='/issue/view/item/',
