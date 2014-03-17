@@ -244,6 +244,8 @@ class UpdateIssueField(LoginRequiredUpdateView):
     def get_object(self):
         return get_object_or_404(self.model, id=self.obj_id)
 
+    def get_form_class(self,**kwargs):
+        return autocomplete_light.modelform_factory(self.model)
 
 class ListIssueFieldView(LoginRequiredListView):
     page_title = ''

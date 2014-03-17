@@ -3,7 +3,15 @@
     <div style="margin-left: 240px;">
         <form id="create-issue-form" action="/issue/edit/{{ post_fix }}/{{object.id}}/" method="post">{% csrf_token %}
           <h3>{{ page_heading }}</h3>
-            {{ form.as_p }}
+        <table>
+        {% for field in form %}
+            <tr class="spaceUnder">
+                <td class="labeltd">{{ field.label_tag }}</td>
+                <td>{{ field }}</td>
+                <td>{% if field.errors %}<div class="fieldWrapper" style="background-color: paleturquoise;">{{ field.errors }}</div>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </table>
           <div class="modal-footer" style="text-align: left">
             <button type="submit" class="btn btn-primary">Save</button>
           </div>
