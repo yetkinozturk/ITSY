@@ -2,12 +2,35 @@ import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+from django.db.models.signals import post_save,pre_delete
+from django.utils.functional import curry
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 from account.models import Account
 from common.models import Comment
 from common.fields import ListField
 from project.models import ProjectVersion, Project
+
+
+def update_field_name(sender, instance, **kwargs):
+    """
+    This function is connected to Fields post_save signal,
+    to ensure that all field names are unique it saves names of fields into
+    IssueFieldName model
+    """
+    ifn = IssueFieldName(content_object=instance,name=instance.name)
+    ifn.save()
+
+
+def delete_field_name(sender, instance, **kwargs):
+    """
+    This function is connected to Fields pre_delete signal,
+    because fields are stored as generic content types,
+    IssueFieldName entries are deleted by this method.
+    """
+    IssueFieldName.objects.filter(name=instance.name).delete()
 
 
 class IssueType(models.Model):
@@ -20,6 +43,17 @@ class IssueType(models.Model):
     def __unicode__(self):
         return self.name
 
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueType)
+pre_delete.connect(receiver=delete_field_name, sender=IssueType)
+
 
 class IssuePriority(models.Model):
     name = models.CharField(_(u'Issue Priority'), max_length=128,unique=True)
@@ -30,6 +64,17 @@ class IssuePriority(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssuePriority)
+pre_delete.connect(receiver=delete_field_name, sender=IssuePriority)
 
 
 class IssueCharField(models.Model):
@@ -43,6 +88,17 @@ class IssueCharField(models.Model):
     def __unicode__(self):
         return self.name
 
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueCharField)
+pre_delete.connect(receiver=delete_field_name, sender=IssueCharField)
+
 
 class IssueTextField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
@@ -54,6 +110,17 @@ class IssueTextField(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueTextField)
+pre_delete.connect(receiver=delete_field_name, sender=IssueTextField)
 
 
 class IssueImageField(models.Model):
@@ -67,6 +134,17 @@ class IssueImageField(models.Model):
     def __unicode__(self):
         return self.name
 
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueImageField)
+pre_delete.connect(receiver=delete_field_name, sender=IssueImageField)
+
 
 class IssueFileField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
@@ -79,6 +157,17 @@ class IssueFileField(models.Model):
     def __unicode__(self):
         return self.name
 
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueFileField)
+pre_delete.connect(receiver=delete_field_name, sender=IssueFileField)
+
 
 class IssueBooleanField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
@@ -89,6 +178,17 @@ class IssueBooleanField(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueBooleanField)
+pre_delete.connect(receiver=delete_field_name, sender=IssueBooleanField)
 
 
 class IssueDatetimeField(models.Model):
@@ -101,6 +201,17 @@ class IssueDatetimeField(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueDatetimeField)
+pre_delete.connect(receiver=delete_field_name, sender=IssueDatetimeField)
 
 
 class IssueChoiceField(models.Model):
@@ -118,6 +229,11 @@ class IssueChoiceField(models.Model):
     def clean(self,*args, **kwargs):
         super(IssueChoiceField, self).clean(*args, **kwargs)
         if self.name and self.choices:
+            if IssueFieldName.objects.filter(name=self.name):
+                if not self.pk:
+                    raise ValidationError(_(u'There is another (type of) field with this name'))
+                else:
+                    IssueFieldName.objects.filter(name=self.name).delete()
             choice_arr = []
             try:
                 choice_arr = self.choices.split(',')
@@ -130,9 +246,12 @@ class IssueChoiceField(models.Model):
             raise ValidationError(_(u'This fields are required'))
 
 
+post_save.connect(receiver=update_field_name, sender=IssueChoiceField)
+pre_delete.connect(receiver=delete_field_name, sender=IssueChoiceField)
+
 
 class IssuePerson(models.Model):
-    role = models.CharField(_(u'Role Name'), max_length=128,unique=True)
+    name = models.CharField(_(u'Role Name'), max_length=128,unique=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
@@ -140,18 +259,40 @@ class IssuePerson(models.Model):
         ordering = ['-entry_date']
 
     def __unicode__(self):
-        return self.role
+        return self.name
+
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssuePerson)
+pre_delete.connect(receiver=delete_field_name, sender=IssuePerson)
 
 
 class IssueStatus(models.Model):
-    status = models.CharField(_(u'Status'), max_length=128,unique=True)
+    name = models.CharField(_(u'Status'), max_length=128,unique=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
     class Meta:
         ordering = ['-entry_date']
 
     def __unicode__(self):
-        return self.status
+        return self.name
+
+    def clean(self):
+        if IssueFieldName.objects.filter(name=self.name):
+            if not self.pk:
+                raise ValidationError(_(u'There is another (type of) field with this name'))
+            else:
+                IssueFieldName.objects.filter(name=self.name).delete()
+
+
+post_save.connect(receiver=update_field_name, sender=IssueStatus)
+pre_delete.connect(receiver=delete_field_name, sender=IssueStatus)
 
 
 class IssueFlow(models.Model):
@@ -246,7 +387,7 @@ class IssueCharValue(models.Model):
 class IssueTextValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueTextField)
-    value = models.TextField(_(u'Field Value'), null=True,blank=True)
+    value = models.TextField(_(u'Field Value'), null=True, blank=True)
 
 
 class IssueImageValue(models.Model):
@@ -278,7 +419,15 @@ class IssueDateValue(models.Model):
     field = models.ForeignKey(IssueDatetimeField)
     value = models.DateTimeField(_(u'Field Value'),null=True,blank=True)
 
+
 class IssueChoiceValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueChoiceField)
     value = models.CharField(_(u'Field Value'),max_length=255, null=True, blank=True)
+
+
+class IssueFieldName(models.Model):
+    name = models.CharField(_(u'Field Name'), max_length=128,unique=True, db_index=True)
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')

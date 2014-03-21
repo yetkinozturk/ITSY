@@ -3,6 +3,7 @@
     <div style="margin-left: 240px;">
         <form method="post">
         <h4>{{ page_heading }}</h4>
+        <h5>{% if form.non_field_errors %}<div class="fieldWrapper" style="background-color: paleturquoise;">{{ form.non_field_errors }}</div>{% endif %}</h5>
         {% csrf_token %}
         <table>
         {% for field in form %}

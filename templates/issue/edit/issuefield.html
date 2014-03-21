@@ -3,6 +3,7 @@
     <div style="margin-left: 240px;">
         <form id="create-issue-form" action="/issue/edit/{{ post_fix }}/{{object.id}}/" method="post">{% csrf_token %}
           <h3>{{ page_heading }}</h3>
+          <h5>{% if form.non_field_errors %}<div class="fieldWrapper" style="background-color: paleturquoise;">{{ form.non_field_errors }}</div>{% endif %}</h5>
         <table>
         {% for field in form %}
             <tr class="spaceUnder">
