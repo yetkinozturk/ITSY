@@ -9,7 +9,7 @@ class IssueTypeTable(tables.Table):
     class Meta:
         model = issue_models.IssueType
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueStatusTable(tables.Table):
@@ -19,7 +19,7 @@ class IssueStatusTable(tables.Table):
     class Meta:
         model = issue_models.IssueStatus
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssuePriorityTable(tables.Table):
@@ -29,7 +29,7 @@ class IssuePriorityTable(tables.Table):
     class Meta:
         model = issue_models.IssuePriority
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueCharTable(tables.Table):
@@ -39,7 +39,7 @@ class IssueCharTable(tables.Table):
     class Meta:
         model = issue_models.IssueCharField
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueBoolTable(tables.Table):
@@ -49,7 +49,7 @@ class IssueBoolTable(tables.Table):
     class Meta:
         model = issue_models.IssueBooleanField
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueDateTable(tables.Table):
@@ -59,7 +59,7 @@ class IssueDateTable(tables.Table):
     class Meta:
         model = issue_models.IssueDatetimeField
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueChoiceTable(tables.Table):
@@ -69,7 +69,7 @@ class IssueChoiceTable(tables.Table):
     class Meta:
         model = issue_models.IssueChoiceField
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueTextTable(tables.Table):
@@ -79,7 +79,7 @@ class IssueTextTable(tables.Table):
     class Meta:
         model = issue_models.IssueTextField
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueImageTable(tables.Table):
@@ -89,7 +89,7 @@ class IssueImageTable(tables.Table):
     class Meta:
         model = issue_models.IssueImageField
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueFileTable(tables.Table):
@@ -99,7 +99,7 @@ class IssueFileTable(tables.Table):
     class Meta:
         model = issue_models.IssueFileField
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssuePersonTable(tables.Table):
@@ -109,7 +109,7 @@ class IssuePersonTable(tables.Table):
     class Meta:
         model = issue_models.IssuePerson
         attrs = {"class": "paleblue"}
-        exclude = ('id','entry_date')
+        exclude = ('id','entry_date','_prev_name')
 
 
 class IssueFlowTable(tables.Table):

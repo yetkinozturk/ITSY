@@ -20,8 +20,17 @@ def update_field_name(sender, instance, **kwargs):
     to ensure that all field names are unique it saves names of fields into
     IssueFieldName model
     """
-    ifn = IssueFieldName(content_object=instance,name=instance.name)
-    ifn.save()
+    #prevent integrity error for unique name field.
+    if not IssueFieldName.objects.filter(name=instance.name):
+        ifn = IssueFieldName(content_object=instance, name=instance.name)
+        ifn.save()
+        # prevent recursive save() call signal should be disconnected and connected again
+        post_save.disconnect(update_field_name, sender=instance.__class__)
+        if instance._prev_name and not (instance.name == instance._prev_name):
+            IssueFieldName.objects.filter(name=instance._prev_name).delete()
+        instance._prev_name = instance.name
+        instance.save()
+        post_save.connect(update_field_name, sender=instance.__class__)
 
 
 def delete_field_name(sender, instance, **kwargs):
@@ -35,6 +44,7 @@ def delete_field_name(sender, instance, **kwargs):
 
 class IssueType(models.Model):
     name = models.CharField(_(u'Type Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
 
     class Meta:
@@ -57,7 +67,8 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueType)
 
 class IssuePriority(models.Model):
     name = models.CharField(_(u'Issue Priority'), max_length=128,unique=True)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True,editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -79,8 +90,9 @@ pre_delete.connect(receiver=delete_field_name, sender=IssuePriority)
 
 class IssueCharField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -102,8 +114,9 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueCharField)
 
 class IssueTextField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -125,8 +138,9 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueTextField)
 
 class IssueImageField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -148,8 +162,9 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueImageField)
 
 class IssueFileField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -171,7 +186,8 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueFileField)
 
 class IssueBooleanField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -193,8 +209,9 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueBooleanField)
 
 class IssueDatetimeField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -216,9 +233,10 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueDatetimeField)
 
 class IssueChoiceField(models.Model):
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     choices = models.TextField(_(u'Choices'),help_text=_(u'Use comma separated values ie: 1,2,3,4'))
     required = models.BooleanField(_(u'Is Required?'), default=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -252,8 +270,9 @@ pre_delete.connect(receiver=delete_field_name, sender=IssueChoiceField)
 
 class IssuePerson(models.Model):
     name = models.CharField(_(u'Role Name'), max_length=128,unique=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
     required = models.BooleanField(_(u'Is Required?'), default=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -275,7 +294,8 @@ pre_delete.connect(receiver=delete_field_name, sender=IssuePerson)
 
 class IssueStatus(models.Model):
     name = models.CharField(_(u'Status'), max_length=128,unique=True)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
+    _prev_name = models.CharField(max_length=128,editable=False, null=True, blank=True)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True, editable=False)
 
     class Meta:
         ordering = ['-entry_date']
@@ -427,6 +447,10 @@ class IssueChoiceValue(models.Model):
 
 
 class IssueFieldName(models.Model):
+    """
+    This class stores name of every field that created.
+    It is useful for advanced search query.
+    """
     name = models.CharField(_(u'Field Name'), max_length=128,unique=True, db_index=True)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
