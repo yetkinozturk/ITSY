@@ -128,12 +128,12 @@ class CreateIssueDetailsForm(autocomplete_light.ModelForm):
 
                 people = issue.template.people.all()
                 for field in people:
-                    self.fields[field.role] = forms.ModelChoiceField(queryset=Account.objects.all(),required=field.required)
-                    self.field_value_class[field.role] = IssuePersonValue
-                    self.field_type_instance[field.role] = field
+                    self.fields[field.name] = forms.ModelChoiceField(queryset=Account.objects.all(),required=field.required)
+                    self.field_value_class[field.name] = IssuePersonValue
+                    self.field_type_instance[field.name] = field
                     try:
                         item = IssuePersonValue.objects.get(issue=issue,field=field)
-                        self.fields[field.role].initial = item.value
+                        self.fields[field.name].initial = item.value
                     except IssuePersonValue.DoesNotExist:
                         pass
 
