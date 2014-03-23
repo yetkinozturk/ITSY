@@ -119,7 +119,7 @@ class Migration(SchemaMigration):
         db.create_table(u'issue_issueflow', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=128)),
-            ('accounts', self.gf('django.db.models.Field')(null=True, blank=True)),
+            ('accounts', self.gf('common.fields.ListField')(null=True, blank=True)),
             ('current', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
             ('next', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
             ('prev', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
@@ -578,7 +578,7 @@ class Migration(SchemaMigration):
         },
         'issue.issueflow': {
             'Meta': {'ordering': "['-entry_date']", 'object_name': 'IssueFlow'},
-            'accounts': ('django.db.models.Field', [], {'null': 'True', 'blank': 'True'}),
+            'accounts': ('common.fields.ListField', [], {'null': 'True', 'blank': 'True'}),
             'current': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'entry_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

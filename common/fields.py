@@ -29,7 +29,7 @@ class PickledObjectField(models.Field):
                 # If an error was raised, just return the plain value
                 return value
 
-    def get_db_prep_save(self, value):
+    def get_db_prep_save(self, value,connection, prepared=False):
         if value is not None and not isinstance(value, PickledObject):
             value = PickledObject(pickle.dumps(value))
         return value
@@ -56,7 +56,7 @@ class PickledObjectField(models.Field):
         """
         # We'll just introspect the _actual_ field.
         from south.modelsinspector import introspector
-        field_class = "django.db.models.Field"
+        field_class = "common.fields.PickledObjectField"
         args, kwargs = introspector(self)
         # That's our definition!
         return (field_class, args, kwargs)
@@ -73,7 +73,7 @@ class DictionaryField(models.Field):
                 return value
             return pickle.loads(str(value))
 
-    def get_db_prep_save(self, value):
+    def get_db_prep_save(self, value, connection, prepared=False):
         if value is not None and not isinstance(value, basestring):
             if isinstance(value, dict):
                 value = pickle.dumps(value)
@@ -90,7 +90,7 @@ class DictionaryField(models.Field):
         """
         # We'll just introspect the _actual_ field.
         from south.modelsinspector import introspector
-        field_class = "django.db.models.Field"
+        field_class = "common.fields.DictionaryField"
         args, kwargs = introspector(self)
         # That's our definition!
         return (field_class, args, kwargs)
@@ -124,7 +124,7 @@ class ListField(models.Field):
             except:
                 return []
 
-    def get_db_prep_save(self, value,connection, prepared=False):
+    def get_db_prep_save(self, value, connection, prepared=False):
         if value is not None and not isinstance(value, basestring):
             if isinstance(value, (list, tuple)):
                 value = base64.b64encode(pickle.dumps(value))
@@ -154,7 +154,8 @@ class ListField(models.Field):
         """
         # We'll just introspect the _actual_ field.
         from south.modelsinspector import introspector
-        field_class = "django.db.models.Field"
+        #field_class = "django.db.models.Field"
+        field_class = "common.fields.ListField"
         args, kwargs = introspector(self)
         # That's our definition!
         return (field_class, args, kwargs)
