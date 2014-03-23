@@ -10,6 +10,7 @@ class MilestoneStatus(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'project'
 
     def __unicode__(self):
         return self.status
@@ -33,6 +34,7 @@ class Milestone(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'project'
 
     def __unicode__(self):
         return self.title
@@ -45,6 +47,7 @@ class ProjectCategory(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'project'
 
     def __unicode__(self):
         return self.name
@@ -62,6 +65,7 @@ class ProjectVersion(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'project'
 
     def __unicode__(self):
         return u'%s / %s'%(self.project.title, self.title)
@@ -77,6 +81,7 @@ class Project(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'project'
 
     def __unicode__(self):
         return self.title
@@ -85,6 +90,9 @@ class Project(models.Model):
 class ProjectMembership(models.Model):
     project = models.ForeignKey(Project, verbose_name=_(u'Project'))
     members = models.ManyToManyField(Account,verbose_name=_(u'Members'),null=True,blank=True)
+
+    class Meta:
+        app_label = 'project'
 
 
 class Board(models.Model):
@@ -97,6 +105,7 @@ class Board(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'project'
 
     def __unicode__(self):
         return self.title

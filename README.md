@@ -17,6 +17,7 @@ Online Demo: http://www.itsyproject.com/
 - django-haystack==2.1.0
 - haystack==0.15
 - Pillow==2.3.1
+- South==0.8.4
 - pyelasticsearch==0.6.1
 - dictdiffer==0.0.4
 - django-autocomplete-light==2.0.0a15
@@ -31,6 +32,10 @@ Online Demo: http://www.itsyproject.com/
 ### Instructions
 
 - Start elasticsearch ie: bin/elasticsearch
+- python manage.py syncdb
+- python manage.py migrate
+- python manage.py createsuperuser
+- python manage.py runserver
 - Create a project
 - Create a project version
 - Create charfields, textfields, etc...

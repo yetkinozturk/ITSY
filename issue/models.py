@@ -2,44 +2,15 @@ import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 from django.db.models.signals import post_save,pre_delete
-from django.utils.functional import curry
 from autoslug import AutoSlugField
+from south.modelsinspector import add_introspection_rules
 from taggit.managers import TaggableManager
 from account.models import Account
-from common.models import Comment
+from common.models import Comment,IssueFieldName
 from common.fields import ListField
+from common.utils import update_field_name,delete_field_name
 from project.models import ProjectVersion, Project
-
-
-def update_field_name(sender, instance, **kwargs):
-    """
-    This function is connected to Fields post_save signal,
-    to ensure that all field names are unique it saves names of fields into
-    IssueFieldName model
-    """
-    #prevent integrity error for unique name field.
-    if not IssueFieldName.objects.filter(name=instance.name):
-        ifn = IssueFieldName(content_object=instance, name=instance.name)
-        ifn.save()
-        # prevent recursive save() call signal should be disconnected and connected again
-        post_save.disconnect(update_field_name, sender=instance.__class__)
-        if instance._prev_name and not (instance.name == instance._prev_name):
-            IssueFieldName.objects.filter(name=instance._prev_name).delete()
-        instance._prev_name = instance.name
-        instance.save()
-        post_save.connect(update_field_name, sender=instance.__class__)
-
-
-def delete_field_name(sender, instance, **kwargs):
-    """
-    This function is connected to Fields pre_delete signal,
-    because fields are stored as generic content types,
-    IssueFieldName entries are deleted by this method.
-    """
-    IssueFieldName.objects.filter(name=instance.name).delete()
 
 
 class IssueType(models.Model):
@@ -49,6 +20,7 @@ class IssueType(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -72,6 +44,7 @@ class IssuePriority(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -96,6 +69,7 @@ class IssueCharField(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -120,6 +94,7 @@ class IssueTextField(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -144,6 +119,7 @@ class IssueImageField(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -168,6 +144,7 @@ class IssueFileField(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -191,6 +168,7 @@ class IssueBooleanField(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -215,6 +193,7 @@ class IssueDatetimeField(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -240,6 +219,7 @@ class IssueChoiceField(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -276,6 +256,7 @@ class IssuePerson(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -299,6 +280,7 @@ class IssueStatus(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -314,6 +296,8 @@ class IssueStatus(models.Model):
 post_save.connect(receiver=update_field_name, sender=IssueStatus)
 pre_delete.connect(receiver=delete_field_name, sender=IssueStatus)
 
+add_introspection_rules([], ["^issue\.models\.ListField"])
+
 
 class IssueFlow(models.Model):
     name = models.CharField(_(u'Flow Name'), max_length=128,unique=True)
@@ -325,6 +309,7 @@ class IssueFlow(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -346,6 +331,7 @@ class IssueTemplate(models.Model):
 
     class Meta:
         ordering = ['-entry_date']
+        app_label = 'issue'
 
     def __unicode__(self):
         return self.name
@@ -375,6 +361,10 @@ class Issue(models.Model):
     entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True)
     update_date = models.DateTimeField(_(u'Update Date'), auto_now=True)
 
+    class Meta:
+        ordering = ['-entry_date']
+        app_label = 'issue'
+
     def __unicode__(self):
         return self.title
 
@@ -392,10 +382,16 @@ class IssueWatch(models.Model):
     issue = models.ForeignKey(Issue, verbose_name=_(u'Issue'))
     watchers = models.ManyToManyField(Account, verbose_name=_(u'Watchers'))
 
+    class Meta:
+        app_label = 'issue'
+
 
 class IssueComment(models.Model):
     models.ForeignKey(Issue, verbose_name=_(u'Issue'))
     models.ManyToManyField(Comment, verbose_name=_(u'Comments'))
+
+    class Meta:
+        app_label = 'issue'
 
 
 class IssueCharValue(models.Model):
@@ -403,11 +399,17 @@ class IssueCharValue(models.Model):
     field = models.ForeignKey(IssueCharField)
     value = models.CharField(_(u'Field Value'), max_length=255,null=True,blank=True)
 
+    class Meta:
+        app_label = 'issue'
+
 
 class IssueTextValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueTextField)
     value = models.TextField(_(u'Field Value'), null=True, blank=True)
+
+    class Meta:
+        app_label = 'issue'
 
 
 class IssueImageValue(models.Model):
@@ -415,11 +417,17 @@ class IssueImageValue(models.Model):
     field = models.ForeignKey(IssueImageField)
     value = models.ImageField(_(u'Image'), upload_to='Issue Images', null=True, blank=True)
 
+    class Meta:
+        app_label = 'issue'
+
 
 class IssueFileValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueFileField)
     value = models.ImageField(_(u'File'), upload_to='Issue Files', null=True, blank=True)
+
+    class Meta:
+        app_label = 'issue'
 
 
 class IssuePersonValue(models.Model):
@@ -427,11 +435,17 @@ class IssuePersonValue(models.Model):
     field = models.ForeignKey(IssuePerson)
     value = models.ForeignKey(Account, null=True, blank=True)
 
+    class Meta:
+        app_label = 'issue'
+
 
 class IssueBoolValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueBooleanField)
     value = models.BooleanField(_(u'Field Value'), default=False)
+
+    class Meta:
+        app_label = 'issue'
 
 
 class IssueDateValue(models.Model):
@@ -439,19 +453,17 @@ class IssueDateValue(models.Model):
     field = models.ForeignKey(IssueDatetimeField)
     value = models.DateTimeField(_(u'Field Value'),null=True,blank=True)
 
+    class Meta:
+        app_label = 'issue'
+
 
 class IssueChoiceValue(models.Model):
     issue = models.ForeignKey(Issue)
     field = models.ForeignKey(IssueChoiceField)
     value = models.CharField(_(u'Field Value'),max_length=255, null=True, blank=True)
 
+    class Meta:
+        app_label = 'issue'
 
-class IssueFieldName(models.Model):
-    """
-    This class stores name of every field that created.
-    It is useful for advanced search query.
-    """
-    name = models.CharField(_(u'Field Name'), max_length=128,unique=True, db_index=True)
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+

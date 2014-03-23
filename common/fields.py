@@ -47,6 +47,20 @@ class PickledObjectField(models.Field):
         else:
             raise TypeError('Lookup type %s is not supported.' % lookup_type)
 
+    def south_field_triple(self):  # pragma: no cover
+        """
+        Returns a suitable description of this field for South.
+        This is excluded from coverage reports since it is pretty much a piece
+        of South itself, and does not influence program behavior at all in
+        case we don't use South.
+        """
+        # We'll just introspect the _actual_ field.
+        from south.modelsinspector import introspector
+        field_class = "django.db.models.Field"
+        args, kwargs = introspector(self)
+        # That's our definition!
+        return (field_class, args, kwargs)
+
 
 class DictionaryField(models.Field):
     __metaclass__ = models.SubfieldBase
@@ -67,6 +81,20 @@ class DictionaryField(models.Field):
                 raise TypeError('This field can only store dictionaries. Use PickledObjectField to store a wide(r) range of data types.')
         return value
 
+    def south_field_triple(self):  # pragma: no cover
+        """
+        Returns a suitable description of this field for South.
+        This is excluded from coverage reports since it is pretty much a piece
+        of South itself, and does not influence program behavior at all in
+        case we don't use South.
+        """
+        # We'll just introspect the _actual_ field.
+        from south.modelsinspector import introspector
+        field_class = "django.db.models.Field"
+        args, kwargs = introspector(self)
+        # That's our definition!
+        return (field_class, args, kwargs)
+
     def get_internal_type(self):
         return 'TextField'
 
@@ -79,6 +107,7 @@ class DictionaryField(models.Field):
             return super(DictionaryField, self).get_db_prep_lookup(lookup_type, value)
         else:
             raise TypeError('Lookup type %s is not supported.' % lookup_type)
+
 
 class ListField(models.Field):
     """A field for storing a list (or tuple) in the database."""
@@ -95,7 +124,7 @@ class ListField(models.Field):
             except:
                 return []
 
-    def get_db_prep_save(self, value):
+    def get_db_prep_save(self, value,connection, prepared=False):
         if value is not None and not isinstance(value, basestring):
             if isinstance(value, (list, tuple)):
                 value = base64.b64encode(pickle.dumps(value))
@@ -115,3 +144,17 @@ class ListField(models.Field):
             return super(DictionaryField, self).get_db_prep_lookup(lookup_type, value)
         else:
             raise TypeError('Lookup type %s is not supported.' % lookup_type)
+
+    def south_field_triple(self):  # pragma: no cover
+        """
+        Returns a suitable description of this field for South.
+        This is excluded from coverage reports since it is pretty much a piece
+        of South itself, and does not influence program behavior at all in
+        case we don't use South.
+        """
+        # We'll just introspect the _actual_ field.
+        from south.modelsinspector import introspector
+        field_class = "django.db.models.Field"
+        args, kwargs = introspector(self)
+        # That's our definition!
+        return (field_class, args, kwargs)

@@ -20,6 +20,7 @@ class CodeRepository(models.Model):
 
     class Meta:
         verbose_name_plural = "Code Repositories"
+        app_label = 'repos'
 
     def __unicode__(self):
         return "%s: %s" % (self.get_repository_type_display(), self.name)

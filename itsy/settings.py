@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'taggit',
     'braces',
     'haystack',
+    'south',
     'autocomplete_light',
     'ckeditor',
     'account',

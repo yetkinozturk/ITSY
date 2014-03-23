@@ -5,12 +5,18 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 class AccountRole(models.Model):
     name = models.CharField(_(u'Role'), max_length=128)
 
+    class Meta:
+        app_label = 'account'
+
     def __unicode__(self):
         return self.name
 
 
 class AccountTeam(models.Model):
     name = models.CharField(_(u'Role'), max_length=128)
+
+    class Meta:
+        app_label = 'account'
 
     def __unicode__(self):
         return self.name
@@ -87,9 +93,16 @@ class Account(AbstractBaseUser):
             self.type = 'AD'
         super(Account, self).save(*args, **kwargs)
 
+    class Meta:
+        app_label = 'account'
+
+
 class Filter(models.Model):
     name = models.CharField(_(u'Filter Name'), max_length=128)
     query = models.CharField(_(u'Filter Query'), max_length=1024)
+
+    class Meta:
+        app_label = 'account'
 
     def __unicode__(self):
         return self.name
@@ -98,3 +111,6 @@ class Filter(models.Model):
 class FavoriteFilters(models.Model):
     account = models.ForeignKey(Account, verbose_name=_(u'Account'))
     filters = models.ManyToManyField(Filter, verbose_name=_(u'Filters'))
+
+    class Meta:
+        app_label = 'account'
