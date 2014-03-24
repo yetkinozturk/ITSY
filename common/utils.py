@@ -55,17 +55,34 @@ def update_field_name(sender, instance, **kwargs):
     to ensure that all field names are unique it saves names of fields into
     IssueFieldName model
     """
-    #prevent integrity error for unique name field.
-    if not IssueFieldName.objects.filter(name=instance.name):
-        ifn = IssueFieldName(content_object=instance, name=instance.name)
-        ifn.save()
-        # prevent recursive save() call signal should be disconnected and connected again
-        post_save.disconnect(update_field_name, sender=instance.__class__)
-        if instance._prev_name and not (instance.name == instance._prev_name):
-            IssueFieldName.objects.filter(name=instance._prev_name).delete()
-        instance._prev_name = instance.name
-        instance.save()
-        post_save.connect(update_field_name, sender=instance.__class__)
+    if hasattr(instance,'name') and hasattr(instance,'_prev_name'):
+        #prevent integrity error for unique name field.
+        if not IssueFieldName.objects.filter(name=instance.name):
+            ifn = IssueFieldName(content_object=instance, name=instance.name)
+            ifn.save()
+            # prevent recursive save() call signal should be disconnected and connected again
+            post_save.disconnect(update_field_name, sender=instance.__class__)
+            if instance._prev_name and not (instance.name == instance._prev_name):
+                IssueFieldName.objects.filter(name=instance._prev_name).delete()
+            instance._prev_name = instance.name
+            instance.save()
+            post_save.connect(update_field_name, sender=instance.__class__)
+
+    elif hasattr(instance,'title') and hasattr(instance,'_prev_title'):
+        #prevent integrity error for unique name field.
+        if not IssueFieldName.objects.filter(name=instance.title):
+            ifn = IssueFieldName(content_object=instance, name=instance.title)
+            ifn.save()
+            # prevent recursive save() call signal should be disconnected and connected again
+            post_save.disconnect(update_field_name, sender=instance.__class__)
+            if instance._prev_title and not (instance.title == instance._prev_title):
+                IssueFieldName.objects.filter(name=instance._prev_title).delete()
+            instance._prev_title = instance.title
+            instance.save()
+            post_save.connect(update_field_name, sender=instance.__class__)
+
+    else:
+        pass
 
 
 def delete_field_name(sender, instance, **kwargs):
@@ -74,5 +91,9 @@ def delete_field_name(sender, instance, **kwargs):
     because fields are stored as generic content types,
     IssueFieldName entries are deleted by this method.
     """
-    IssueFieldName.objects.filter(name=instance.name).delete()
-
+    if hasattr(instance,'name') and hasattr(instance,'_prev_name'):
+        IssueFieldName.objects.filter(name=instance.name).delete()
+    elif hasattr(instance,'title') and hasattr(instance,'_prev_title'):
+        IssueFieldName.objects.filter(name=instance.title).delete()
+    else:
+        pass

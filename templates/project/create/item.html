@@ -2,6 +2,7 @@
 {% block content %}
     <div style="margin-left: 240px;">
     <h4>{{ page_heading }}</h4>
+    <h5>{% if form.non_field_errors %}<div class="fieldWrapper" style="background-color: paleturquoise;">{{ form.non_field_errors }}</div>{% endif %}</h5>
     <form method="post" action="">
         {% csrf_token %}
         <table>
