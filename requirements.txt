@@ -15,3 +15,4 @@ dictdiffer==0.0.4
 django-autocomplete-light==2.0.0a15
 -e git://github.com/shaunsephton/django-ckeditor.git#egg=django-ckeditor
 
+django-datetime-widget==0.6
