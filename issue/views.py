@@ -5,6 +5,7 @@ from django_tables2 import RequestConfig
 import autocomplete_light
 autocomplete_light.autodiscover()
 from ckeditor.widgets import CKEditorWidget
+from datetimewidget.widgets import DateTimeWidget
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
                           IssueBoolValue, IssueChoiceValue)
@@ -24,7 +25,8 @@ class CreateIssueInitForm(autocomplete_light.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreateIssueInitForm, self).__init__(*args, **kwargs)
         self.fields['summary'].widget = CKEditorWidget()
-
+        self.fields['due_date'].widget = DateTimeWidget(attrs={'id':"id_due_date"}, usel10n = True)
+        self.fields['end_date'].widget = DateTimeWidget(attrs={'id':"id_end_date"}, usel10n = True)
 
 class CreateIssueDetailsForm(autocomplete_light.ModelForm):
     """
@@ -46,6 +48,8 @@ class CreateIssueDetailsForm(autocomplete_light.ModelForm):
             self.fields.pop('template')
             self.original_fields = self.fields.copy()
             self.fields['summary'].widget = CKEditorWidget()
+            self.fields['due_date'].widget = DateTimeWidget(attrs={'id':"id_due_date"}, usel10n = True)
+            self.fields['end_date'].widget = DateTimeWidget(attrs={'id':"id_end_date"}, usel10n = True)
 
             if issue.template:
 
@@ -95,7 +99,9 @@ class CreateIssueDetailsForm(autocomplete_light.ModelForm):
 
                 date_fields = issue.template.date_fields.all()
                 for field in date_fields:
-                    self.fields[field.name] = forms.DateTimeField(required=field.required)
+                    self.fields[field.name] = forms.DateTimeField(
+                        required=field.required,
+                        widget=DateTimeWidget(attrs={'id':"%s_id"%field.name}, usel10n = True))
                     self.field_value_class[field.name] = IssueDateValue
                     self.field_type_instance[field.name] = field
                     try:
