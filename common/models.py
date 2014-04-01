@@ -4,7 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from account.models import Account
 
-
 class Comment(models.Model):
     text = models.TextField()
     owner = models.ForeignKey(Account)
@@ -43,16 +42,6 @@ class MainConfiguration(models.Model):
 
     class Meta:
         app_label = 'common'
-
-
-class History(models.Model):
-    account = models.ForeignKey(Account,editable=False)
-    message = models.CharField(_(u'Message'), max_length=1024,editable=False)
-    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True,editable=False)
-
-    class Meta:
-        app_label = 'common'
-
 
 
 class IssueFieldName(models.Model):

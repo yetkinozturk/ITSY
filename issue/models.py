@@ -466,4 +466,11 @@ class IssueChoiceValue(models.Model):
         app_label = 'issue'
 
 
+class History(models.Model):
+    issue = models.ForeignKey(Issue, null=True, blank=True,editable=False)
+    account = models.ForeignKey(Account,editable=False)
+    log = models.TextField(_(u'Log'), editable=False)
+    entry_date = models.DateTimeField(_(u'Create Date'), auto_now_add=True,editable=False)
 
+    class Meta:
+        app_label = 'issue'
