@@ -1,11 +1,13 @@
+import pickle
 import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save,pre_delete
+from dictdiffer import diff as ddiff
+from django.forms.models import model_to_dict
 from autoslug import AutoSlugField
 from south.modelsinspector import add_introspection_rules
-from taggit.managers import TaggableManager
 from account.models import Account
 from common.models import Comment,IssueFieldName
 from common.fields import ListField
@@ -26,10 +28,13 @@ class IssueType(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -50,10 +55,13 @@ class IssuePriority(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -75,10 +83,13 @@ class IssueCharField(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -100,10 +111,13 @@ class IssueTextField(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -125,10 +139,13 @@ class IssueImageField(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -150,10 +167,13 @@ class IssueFileField(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -174,10 +194,13 @@ class IssueBooleanField(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -199,10 +222,13 @@ class IssueDatetimeField(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -227,10 +253,13 @@ class IssueChoiceField(models.Model):
     def clean(self,*args, **kwargs):
         super(IssueChoiceField, self).clean(*args, **kwargs)
         if self.name and self.choices:
-            if IssueFieldName.objects.filter(name=self.name):
+            if IssueFieldName.objects.filter(name=self.name).exists():
                 if not self.pk:
                     raise ValidationError(_(u'There is another (type of) field with this name'))
                 else:
+                    if not self.name == self._prev_name:
+                        if IssueFieldName.objects.filter(name=self.name).exists():
+                            raise ValidationError(_(u'There is another (type of) field with this name'))
                     IssueFieldName.objects.filter(name=self.name).delete()
             choice_arr = []
             try:
@@ -262,10 +291,13 @@ class IssuePerson(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -286,10 +318,13 @@ class IssueStatus(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) field with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 
@@ -349,7 +384,6 @@ class Issue(models.Model):
     type = models.ForeignKey(IssueType, verbose_name=_(u'Type'), null=True, blank=True)
     status = models.ForeignKey(IssueStatus,verbose_name=_(u'Status'), null=True, blank=True)
     priority = models.ForeignKey(IssuePriority, verbose_name=_(u'Priority'), null=True, blank=True)
-    tags = TaggableManager(blank=True)
     template = models.ForeignKey(IssueTemplate, verbose_name=_(u'Issue Template'),help_text=_(u'Provide a template even it is empty'))
     sub_issues = models.ManyToManyField('self', symmetrical=False,null=True, blank=True)
     changelog = models.TextField(editable=False, null=True, blank=True)
@@ -401,6 +435,7 @@ class IssueCharValue(models.Model):
 
     class Meta:
         app_label = 'issue'
+        unique_together = ("issue", "field")
 
 
 class IssueTextValue(models.Model):
@@ -410,6 +445,7 @@ class IssueTextValue(models.Model):
 
     class Meta:
         app_label = 'issue'
+        unique_together = ("issue", "field")
 
 
 class IssueImageValue(models.Model):
@@ -419,6 +455,7 @@ class IssueImageValue(models.Model):
 
     class Meta:
         app_label = 'issue'
+        unique_together = ("issue", "field")
 
 
 class IssueFileValue(models.Model):
@@ -428,6 +465,7 @@ class IssueFileValue(models.Model):
 
     class Meta:
         app_label = 'issue'
+        unique_together = ("issue", "field")
 
 
 class IssuePersonValue(models.Model):
@@ -437,6 +475,7 @@ class IssuePersonValue(models.Model):
 
     class Meta:
         app_label = 'issue'
+        unique_together = ("issue", "field")
 
 
 class IssueBoolValue(models.Model):
@@ -446,6 +485,7 @@ class IssueBoolValue(models.Model):
 
     class Meta:
         app_label = 'issue'
+        unique_together = ("issue", "field")
 
 
 class IssueDateValue(models.Model):
@@ -455,7 +495,7 @@ class IssueDateValue(models.Model):
 
     class Meta:
         app_label = 'issue'
-
+        unique_together = ("issue", "field")
 
 class IssueChoiceValue(models.Model):
     issue = models.ForeignKey(Issue)
@@ -464,6 +504,7 @@ class IssueChoiceValue(models.Model):
 
     class Meta:
         app_label = 'issue'
+        unique_together = ("issue", "field")
 
 
 class History(models.Model):
@@ -474,3 +515,70 @@ class History(models.Model):
 
     class Meta:
         app_label = 'issue'
+
+
+FIELDS = '__fields__'
+
+
+def set_issue_changes(issue):
+    model_as_dict = model_to_dict(issue)
+    model_as_dict['__fields__'] = {}
+    template_id = model_as_dict.get('template',None)
+    if template_id:
+        template = IssueTemplate.objects.get(pk=template_id)
+
+        #uniqueness of item.name is guaranteed
+        for item in template.char_fields.all():
+            model_as_dict[FIELDS][ '%s' % item.name ] =\
+                IssueCharValue.objects.get(
+                    issue=issue,
+                    field=item
+                ).value
+
+        for item in template.text_fields.all():
+            model_as_dict[FIELDS][ '%s' % item.name ] =\
+                IssueTextValue.objects.get(
+                    issue=issue,
+                    field=item
+                ).value
+
+        for item in template.bool_fields.all():
+            model_as_dict[FIELDS][ '%s' % item.name ] =\
+                IssueTextValue.objects.get(
+                    issue=issue,
+                    field=item
+                ).value
+
+        for item in template.choice_fields.all():
+            model_as_dict[FIELDS][ '%s' % item.name ] =\
+                IssueTextValue.objects.get(
+                    issue=issue,
+                    field=item
+                ).value
+
+        for item in template.date_fields.all():
+            model_as_dict[FIELDS][ '%s' % item.name ] =\
+                IssueTextValue.objects.get(
+                    issue=issue,
+                    field=item
+                ).value
+
+        for item in template.people.all():
+            model_as_dict[FIELDS][ '%s' % item.name ] =\
+                IssueTextValue.objects.get(
+                    issue=issue,
+                    field=item
+                ).value
+    # print "#######################"
+    # print model_as_dict
+    # print "#######################"
+    # prev_model_as_dict = {}
+    # if issue.changelog:
+    #     prev_model_as_dict = pickle.loads(issue.changelog)
+    # _diff = ddiff(prev_model_as_dict, model_as_dict)
+    # print "#######################"
+    # #print dict((y, z[1]) for (x, y, z) in list(_diff))
+    # print list(_diff)
+    # print "#######################"
+    # #issue.changelog = pickle.dumps(model_as_dict)
+    # #issue.save()

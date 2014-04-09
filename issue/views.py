@@ -8,7 +8,7 @@ from ckeditor.widgets import CKEditorWidget
 from datetimewidget.widgets import DateTimeWidget
 from issue.models import (Issue, IssueCharValue, IssueTextValue, IssueImageValue,
                           IssueFileValue, IssuePersonValue, IssueDateValue,
-                          IssueBoolValue, IssueChoiceValue)
+                          IssueBoolValue, IssueChoiceValue,set_issue_changes)
 from account.models import Account
 from common.views import (LoginRequiredListView,LoginRequiredCreateView,
                           LoginRequiredDeleteView,LoginRequiredUpdateView,
@@ -157,6 +157,7 @@ class CreateIssueDetailsForm(autocomplete_light.ModelForm):
                     field=self.field_type_instance.get(k))
                 item.value = self.cleaned_data.get(k)
                 item.save()
+        #set_issue_changes(m)
         return m
 
 

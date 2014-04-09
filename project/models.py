@@ -45,10 +45,13 @@ class Milestone(models.Model):
         return self.title
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.title):
+        if IssueFieldName.objects.filter(name=self.title).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) item with this title'))
             else:
+                if not self.title == self._prev_title:
+                    if IssueFieldName.objects.filter(name=self.title).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.title).delete()
 
 post_save.connect(receiver=update_field_name, sender=Milestone)
@@ -69,10 +72,13 @@ class ProjectCategory(models.Model):
         return self.name
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.name):
+        if IssueFieldName.objects.filter(name=self.name).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) item with this name'))
             else:
+                if not self.name == self._prev_name:
+                    if IssueFieldName.objects.filter(name=self.name).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.name).delete()
 
 post_save.connect(receiver=update_field_name, sender=ProjectCategory)
@@ -98,10 +104,13 @@ class ProjectVersion(models.Model):
         return u'%s / %s'%(self.project.title, self.title)
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.title):
+        if IssueFieldName.objects.filter(name=self.title).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) item with this title'))
             else:
+                if not self.title == self._prev_title:
+                    if IssueFieldName.objects.filter(name=self.title).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.title).delete()
 
 
@@ -126,10 +135,13 @@ class Project(models.Model):
         return self.title
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.title):
+        if IssueFieldName.objects.filter(name=self.title).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) item with this title'))
             else:
+                if not self.title == self._prev_title:
+                    if IssueFieldName.objects.filter(name=self.title).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.title).delete()
 
 post_save.connect(receiver=update_field_name, sender=Project)
@@ -161,10 +173,13 @@ class Board(models.Model):
         return self.title
 
     def clean(self):
-        if IssueFieldName.objects.filter(name=self.title):
+        if IssueFieldName.objects.filter(name=self.title).exists():
             if not self.pk:
                 raise ValidationError(_(u'There is another (type of) item with this title'))
             else:
+                if not self.title == self._prev_title:
+                    if IssueFieldName.objects.filter(name=self.title).exists():
+                        raise ValidationError(_(u'There is another (type of) field with this name'))
                 IssueFieldName.objects.filter(name=self.title).delete()
 
 post_save.connect(receiver=update_field_name, sender=Board)

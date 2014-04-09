@@ -106,3 +106,9 @@ HAYSTACK_CONNECTIONS = {
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+try:
+   from local_settings import *
+except ImportError, e:
+   pass
