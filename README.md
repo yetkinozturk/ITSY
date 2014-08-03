@@ -5,6 +5,7 @@ ITSY
 ITSY is an issue tracking system built in Django
 
 Online Demo: http://www.itsyproject.com/
+username: demo@demo.com / password: demo
 
 ### Requirements
 
