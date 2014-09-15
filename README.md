@@ -7,6 +7,18 @@ ITSY is an issue tracking system built in Django
 Online Demo: http://www.itsyproject.com/
 username: demo@demo.com / password: demo
 
+Creating Issues:
+
+![alt tag] (http://www.itsyproject.com/static/examples/itsy_create.png)
+
+Listing Issues:
+
+![alt tag] (http://www.itsyproject.com/static/examples/itsy_issues.png)
+
+Browsing Code Repos:
+
+![alt tag] (http://www.itsyproject.com/static/examples/itsy_repos.png)
+
 ### Requirements
 
 - Django==1.6.2
