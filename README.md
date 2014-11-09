@@ -2,9 +2,10 @@ ITSY
 ====
 ### ITSY: Issue Tracking System.
 
-ITSY is an issue tracking system built in Django
+ITSY is an issue tracking system built in Django.
 
 Online Demo: http://www.itsyproject.com/
+
 username: demo@demo.com / password: demo
 
 Creating Issues:
